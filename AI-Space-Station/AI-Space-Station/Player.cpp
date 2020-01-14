@@ -34,7 +34,8 @@ void Player::init()
 	m_rotation = 0;
 	m_speed = 0;
 	m_maxVelocity = 3;
-
+	m_coolDown = 0;
+	m_fireRate = 100;
 	m_health = 100;
 	m_animatedColour = 0;
 
@@ -76,16 +77,11 @@ void Player::loadTextures()
 /// <param name="deltaTime"></param>
 void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile>& tilemap, int playerNumber)
 {
-	//
 	m_position = m_sprite.getPosition();
-	//
 	createBoundaryTileVector(tilemap);
-	//
 	powerupColourAnimate();
-	//
 	powerupTime();
 
-	//
 	if (m_invincible == false && m_boosted == false)
 	{
 		m_animatedColour = 0;
@@ -93,28 +89,20 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 		m_bColour = 1;
 	}
 
-	//
 	rotate();
 	speed();
-	//
+	shoot();
 	powerupCollision(powerup);
 
 	m_sprite.setPosition(m_position);
-	//
+
 	if (playerNumber == 1)
 	{
 		v.setCenter(m_sprite.getPosition());
 	}
 
-	m_velocity.x = cos((M_PI / 180) * m_rotation) * m_speed;
-	m_velocity.y = sin((M_PI / 180) * m_rotation) * m_speed;
-
-	m_position = m_position + m_velocity;
-	m_sprite.setPosition(m_position);
-
-
+	move();
 	tileCollision(m_boundaryTiles, playerNumber);
-	
 }
 
 /// <summary>
@@ -132,103 +120,71 @@ void Player::render(sf::RenderWindow& window, sf::Vector2f scale)
 ///// </summary>
 //void Player::addVelocity()
 //{
-//	float speed = 0.0f;
-//
-//	//
+
 //	if (sf::Keyboard::isKeyPressed(m_keyboard.Up))
 //	{
-//		//
 //		if (m_boosted == true)
 //		{
 //			speed = m_maxSpeed + m_boostSpeed;
 //		}
-//		//
 //		else if (m_boosted == false)
 //		{
 //			speed = m_maxSpeed;
 //		}
-//		//
-//		m_up = true;
-//		m_down = false;
-//		m_left = false;
-//		m_right = false;
-//		//
-//		m_angle = 0;
-//		m_position.y -= speed;
 //	}
 //
 //	//
 //	else if (sf::Keyboard::isKeyPressed(m_keyboard.Down))
 //	{
-//		//
 //		if (m_boosted == true)
 //		{
 //			speed = m_maxSpeed + m_boostSpeed;
 //		}
-//		//
 //		else if (m_boosted == false)
 //		{
 //			speed = m_maxSpeed;
 //		}
-//
-//		//
-//		m_up = false;
-//		m_down = true;
-//		m_left = false;
-//		m_right = false;
-//		//
-//		m_angle = 180;
-//		m_position.y += speed;
 //	}
 //
 //	//
 //	else if (sf::Keyboard::isKeyPressed(m_keyboard.Left))
 //	{
-//		//
 //		if (m_boosted == true)
 //		{
 //			speed = m_maxSpeed + m_boostSpeed;
 //		}
-//		//
 //		else if (m_boosted == false)
 //		{
 //			speed = m_maxSpeed;
 //		}
 //
-//		//
 //		m_up = false;
 //		m_down = false;
 //		m_left = true;
 //		m_right = false;
-//		//
+
 //		m_angle = 270;
 //		m_position.x -= speed;
 //	}
 //
-//	//
 //	else if (sf::Keyboard::isKeyPressed(m_keyboard.Right))
 //	{
-//		//
 //		if (m_boosted == true)
 //		{
 //			speed = m_maxSpeed + m_boostSpeed;
 //		}
-//		//
 //		else if (m_boosted == false)
 //		{
 //			speed = m_maxSpeed;
 //		}
 //
-//		//
 //		m_up = false;
 //		m_down = false;
 //		m_left = false;
 //		m_right = true;
-//		//
 //		m_angle = 90;
 //		m_position.x += speed;
 //	}
-//
 //	m_sprite.setRotation(m_angle);
 //}
 
@@ -268,13 +224,29 @@ void Player::rotate()
 	m_sprite.setRotation(m_rotation);
 }
 
-//
+
+void Player::move()
+{
+	m_velocity.x = cos((M_PI / 180) * m_rotation) * m_speed;
+	m_velocity.y = sin((M_PI / 180) * m_rotation) * m_speed;
+
+	m_position = m_position + m_velocity;
+	m_sprite.setPosition(m_position);
+}
+
+void Player::shoot()
+{
+
+
+
+
+}
+
 void Player::workerCollision()
 {
 
 }
 
-//
 void Player::projectileCollision()
 {
 	if (m_invincible == false)
@@ -283,7 +255,6 @@ void Player::projectileCollision()
 	}
 }
 
-//
 void Player::enemyCollision()
 {
 	if (m_invincible == false)
@@ -299,14 +270,12 @@ void Player::enemyCollision()
 /// <param name="powerup"></param>
 void Player::powerupCollision(PowerUp * powerup)
 {
-	//
 	if (powerup->getActive() == true)
 	{
 		if (m_sprite.getGlobalBounds().intersects(powerup->getSprite().getGlobalBounds()))
 		{
 			powerup->setActive(false);
 
-			//
 			if (powerup->getType() >= 1 && powerup->getType() <= 10)
 			{
 				m_invincible = true;
@@ -315,7 +284,6 @@ void Player::powerupCollision(PowerUp * powerup)
 				m_bColour = 1;
 				m_powerupTime = 250;
 			}
-			//
 			else if (powerup->getType() >= 11 && powerup->getType() <= 20)
 			{
 				m_invincible = false;
@@ -336,14 +304,12 @@ void Player::powerupCollision(PowerUp * powerup)
 /// <param name="tilemap"></param>
 void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 {
-	//
 	if (playerNumber == 1)
 	{
 		for (int i = 0; i < tilemap.size(); i++)
 		{
 			if (tilemap[i].getType() == 1)
 			{
-				//
 				if (m_sprite.getGlobalBounds().intersects(tilemap[i].getSprite().getGlobalBounds()))
 				{
 					m_position -= m_velocity;
@@ -361,13 +327,10 @@ void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 /// <param name="tilemap"></param>
 void Player::createBoundaryTileVector(std::vector<Tile> &tilemap)
 {
-	//
 	if (m_mapCreated == false)
 	{
-		//
 		for (int i = 0; i < tilemap.size(); i++)
 		{
-			//
 			if (tilemap[i].getType() == 1)
 			{
 				m_boundaryTiles.push_back(tilemap[i]);
@@ -375,8 +338,6 @@ void Player::createBoundaryTileVector(std::vector<Tile> &tilemap)
 
 		}
 	}
-
-	//
 	m_mapCreated = true;
 }
 
@@ -385,7 +346,6 @@ void Player::createBoundaryTileVector(std::vector<Tile> &tilemap)
 /// </summary>
 void Player::powerupColourAnimate()
 {
-	//
 	if (m_invincible == true)
 	{
 		m_animatedColour++;
@@ -397,7 +357,6 @@ void Player::powerupColourAnimate()
 		}
 	}
 
-	//
 	else if (m_boosted == true)
 	{
 		m_animatedColour++;
@@ -409,17 +368,14 @@ void Player::powerupColourAnimate()
 		}
 	}
 
-	//
 	if (m_iColour == -1)
 	{
 		m_sprite.setColor(sf::Color::Blue);
 	}
-	//
 	else if (m_bColour == -1)
 	{
 		m_sprite.setColor(sf::Color::Red);
 	}
-	//
 	else
 	{
 		m_sprite.setColor(sf::Color::White);
@@ -466,5 +422,4 @@ void Player::setPosition(sf::Vector2f position)
 	m_position = position;
 	m_sprite.setPosition(m_position);
 }
-
 

@@ -31,6 +31,8 @@ public:
 private:
 	void speed();
 	void rotate();
+	void move();
+	void shoot();
 	void powerupColourAnimate();
 	void powerupTime();
 	void createBoundaryTileVector(std::vector<Tile> &tilemap);
@@ -57,7 +59,7 @@ private:
 
 	float m_speed, m_maxSpeed, m_boostSpeed, m_rotation, m_maxVelocity;
 
-	int m_health, m_animatedColour, m_iColour, m_bColour, m_powerupTime;
+	int m_health, m_animatedColour, m_iColour, m_bColour, m_powerupTime, m_coolDown, m_fireRate;
 
 	bool m_invincible, m_boosted, m_mapCreated, m_up, m_right, m_down, m_left;
 
