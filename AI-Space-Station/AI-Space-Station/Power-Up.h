@@ -1,14 +1,3 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 10:47 15 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #ifndef POWERUP_H
 #define POWERUP_H
 

@@ -1,21 +1,10 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 10:16 7 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #include "Game.h"
 
 /// <summary>
 /// constructor
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{1920, 1080, 32}, "AI Space Station"},
+	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
 	gameState{GameState::GAME}
 {
@@ -48,7 +37,6 @@ Game::Game() :
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
-//	m_window.setFramerateLimit(144);
 }
 
 /// <summary>

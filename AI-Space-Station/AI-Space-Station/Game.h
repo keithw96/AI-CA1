@@ -1,14 +1,3 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 10:10 7 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #ifndef GAME_H
 #define GAME_H
 #include <vector>

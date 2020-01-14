@@ -1,14 +1,3 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 13:35 8 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #include "Player.h"
 
 /// <summary>
@@ -42,8 +31,9 @@ void Player::init()
 
 	m_maxSpeed = 15;
 	m_boostSpeed = 10;
-	m_angle = 0;
-	m_maxVelocity = 5;
+	m_rotation = 0;
+	m_speed = 0;
+	m_maxVelocity = 3;
 
 	m_health = 100;
 	m_animatedColour = 0;
@@ -53,7 +43,6 @@ void Player::init()
 
 	m_powerupTime = 0;
 
-	//m_projectileSprite.setTexture(m_projectileTxt);
 	m_sprite.setTexture(m_texture);
 	m_sprite.setPosition(m_position);
 	m_sprite.setOrigin(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2);
@@ -85,7 +74,7 @@ void Player::loadTextures()
 /// Updates the player's movements and collisions
 /// </summary>
 /// <param name="deltaTime"></param>
-void Player::update(sf::Time deltaTime, sf::View & v, PowerUp * powerup, std::vector<Tile> &tilemap, int playerNumber)
+void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile>& tilemap, int playerNumber)
 {
 	//
 	m_position = m_sprite.getPosition();
@@ -95,7 +84,7 @@ void Player::update(sf::Time deltaTime, sf::View & v, PowerUp * powerup, std::ve
 	powerupColourAnimate();
 	//
 	powerupTime();
-	
+
 	//
 	if (m_invincible == false && m_boosted == false)
 	{
@@ -105,10 +94,10 @@ void Player::update(sf::Time deltaTime, sf::View & v, PowerUp * powerup, std::ve
 	}
 
 	//
-	addVelocity();
+	rotate();
+	speed();
 	//
 	powerupCollision(powerup);
-	tileCollision(m_boundaryTiles, playerNumber);
 
 	m_sprite.setPosition(m_position);
 	//
@@ -116,6 +105,16 @@ void Player::update(sf::Time deltaTime, sf::View & v, PowerUp * powerup, std::ve
 	{
 		v.setCenter(m_sprite.getPosition());
 	}
+
+	m_velocity.x = cos((M_PI / 180) * m_rotation) * m_speed;
+	m_velocity.y = sin((M_PI / 180) * m_rotation) * m_speed;
+
+	m_position = m_position + m_velocity;
+	m_sprite.setPosition(m_position);
+
+
+	tileCollision(m_boundaryTiles, playerNumber);
+	
 }
 
 /// <summary>
@@ -128,109 +127,145 @@ void Player::render(sf::RenderWindow& window, sf::Vector2f scale)
 	window.draw(m_sprite);
 }
 
-/// <summary>
-/// increases the players speed if the up key is pressed
-/// </summary>
-void Player::addVelocity()
+///// <summary>
+///// increases the players speed if the up key is pressed
+///// </summary>
+//void Player::addVelocity()
+//{
+//	float speed = 0.0f;
+//
+//	//
+//	if (sf::Keyboard::isKeyPressed(m_keyboard.Up))
+//	{
+//		//
+//		if (m_boosted == true)
+//		{
+//			speed = m_maxSpeed + m_boostSpeed;
+//		}
+//		//
+//		else if (m_boosted == false)
+//		{
+//			speed = m_maxSpeed;
+//		}
+//		//
+//		m_up = true;
+//		m_down = false;
+//		m_left = false;
+//		m_right = false;
+//		//
+//		m_angle = 0;
+//		m_position.y -= speed;
+//	}
+//
+//	//
+//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Down))
+//	{
+//		//
+//		if (m_boosted == true)
+//		{
+//			speed = m_maxSpeed + m_boostSpeed;
+//		}
+//		//
+//		else if (m_boosted == false)
+//		{
+//			speed = m_maxSpeed;
+//		}
+//
+//		//
+//		m_up = false;
+//		m_down = true;
+//		m_left = false;
+//		m_right = false;
+//		//
+//		m_angle = 180;
+//		m_position.y += speed;
+//	}
+//
+//	//
+//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Left))
+//	{
+//		//
+//		if (m_boosted == true)
+//		{
+//			speed = m_maxSpeed + m_boostSpeed;
+//		}
+//		//
+//		else if (m_boosted == false)
+//		{
+//			speed = m_maxSpeed;
+//		}
+//
+//		//
+//		m_up = false;
+//		m_down = false;
+//		m_left = true;
+//		m_right = false;
+//		//
+//		m_angle = 270;
+//		m_position.x -= speed;
+//	}
+//
+//	//
+//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Right))
+//	{
+//		//
+//		if (m_boosted == true)
+//		{
+//			speed = m_maxSpeed + m_boostSpeed;
+//		}
+//		//
+//		else if (m_boosted == false)
+//		{
+//			speed = m_maxSpeed;
+//		}
+//
+//		//
+//		m_up = false;
+//		m_down = false;
+//		m_left = false;
+//		m_right = true;
+//		//
+//		m_angle = 90;
+//		m_position.x += speed;
+//	}
+//
+//	m_sprite.setRotation(m_angle);
+//}
+
+void Player::speed()
 {
-	float speed = 0.0f;
-
-	//
-	if (sf::Keyboard::isKeyPressed(m_keyboard.Up))
+	if (sf::Keyboard::isKeyPressed(m_keyboard.W) || sf::Keyboard::isKeyPressed(m_keyboard.Up) && m_speed < m_maxSpeed)
 	{
-		//
-		if (m_boosted == true)
-		{
-			speed = m_maxSpeed + m_boostSpeed;
-		}
-		//
-		else if (m_boosted == false)
-		{
-			speed = m_maxSpeed;
-		}
-		//
-		m_up = true;
-		m_down = false;
-		m_left = false;
-		m_right = false;
-		//
-		m_angle = 0;
-		m_position.y -= speed;
+		m_speed += 0.5f;
 	}
 
-	//
-	else if (sf::Keyboard::isKeyPressed(m_keyboard.Down))
+	if (sf::Keyboard::isKeyPressed(m_keyboard.S) || sf::Keyboard::isKeyPressed(m_keyboard.Down) && m_speed > 0)
 	{
-		//
-		if (m_boosted == true)
-		{
-			speed = m_maxSpeed + m_boostSpeed;
-		}
-		//
-		else if (m_boosted == false)
-		{
-			speed = m_maxSpeed;
-		}
+		m_speed -= 0.5f;
+	}
+}
 
-		//
-		m_up = false;
-		m_down = true;
-		m_left = false;
-		m_right = false;
-		//
-		m_angle = 180;
-		m_position.y += speed;
+void Player::rotate()
+{
+
+	if (sf::Keyboard::isKeyPressed(m_keyboard.A) || sf::Keyboard::isKeyPressed(m_keyboard.Left))
+	{
+		m_rotation -= 2;
+		if (m_rotation < 0)
+		{
+			m_rotation = 360;
+		}
 	}
 
-	//
-	else if (sf::Keyboard::isKeyPressed(m_keyboard.Left))
+	if (sf::Keyboard::isKeyPressed(m_keyboard.D) || sf::Keyboard::isKeyPressed(m_keyboard.Right))
 	{
-		//
-		if (m_boosted == true)
+		m_rotation += 2;
+		if (m_rotation > 360)
 		{
-			speed = m_maxSpeed + m_boostSpeed;
+			m_rotation = 0;
 		}
-		//
-		else if (m_boosted == false)
-		{
-			speed = m_maxSpeed;
-		}
-
-		//
-		m_up = false;
-		m_down = false;
-		m_left = true;
-		m_right = false;
-		//
-		m_angle = 270;
-		m_position.x -= speed;
 	}
-
-	//
-	else if (sf::Keyboard::isKeyPressed(m_keyboard.Right))
-	{
-		//
-		if (m_boosted == true)
-		{
-			speed = m_maxSpeed + m_boostSpeed;
-		}
-		//
-		else if (m_boosted == false)
-		{
-			speed = m_maxSpeed;
-		}
-
-		//
-		m_up = false;
-		m_down = false;
-		m_left = false;
-		m_right = true;
-		//
-		m_angle = 90;
-		m_position.x += speed;
-	}
-
-	m_sprite.setRotation(m_angle);
+	m_sprite.setRotation(m_rotation);
 }
 
 //
@@ -299,7 +334,7 @@ void Player::powerupCollision(PowerUp * powerup)
 /// depending on the direction they were facing 
 /// </summary>
 /// <param name="tilemap"></param>
-void Player::tileCollision(std::vector<Tile> &tilemap, int playerNumber)
+void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 {
 	//
 	if (playerNumber == 1)
@@ -311,33 +346,13 @@ void Player::tileCollision(std::vector<Tile> &tilemap, int playerNumber)
 				//
 				if (m_sprite.getGlobalBounds().intersects(tilemap[i].getSprite().getGlobalBounds()))
 				{
-					std::cout << "Collided" << std::endl;
-
-					//
-					if (m_up == true)
-					{
-						m_position.y += 50;
-					}
-					//
-					else if (m_down == true)
-					{
-						m_position.y -= 50;
-					}
-					//
-					else if (m_left == true)
-					{
-						m_position.x += 55;
-					}
-					//
-					else if (m_right == true)
-					{
-						m_position.x -= 55;
-					}
-				}//End if
-			}//End if
-		}//End for
+					m_position -= m_velocity;
+					m_sprite.setPosition(m_position);
+					std::cout << m_position.x << ", " << m_position.y << std::endl;
+				}
+			}
+		}
 	}
-
 }
 
 /// <summary>

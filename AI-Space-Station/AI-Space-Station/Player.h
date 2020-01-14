@@ -1,16 +1,7 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 13:26 8 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #ifndef PLAYER_H
 #define PLAYER_H
+
+#define _USE_MATH_DEFINES
 
 #include "SFML/Graphics.hpp"
 
@@ -20,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 //
 class Player
@@ -37,7 +29,8 @@ public:
 	void tileCollision(std::vector<Tile> &tilemap, int playerNumber);
 
 private:
-	void addVelocity();
+	void speed();
+	void rotate();
 	void powerupColourAnimate();
 	void powerupTime();
 	void createBoundaryTileVector(std::vector<Tile> &tilemap);
@@ -62,7 +55,7 @@ private:
 
 	std::vector<Projectile*> m_projectiles;
 
-	float m_maxSpeed, m_boostSpeed, m_angle, m_maxVelocity;
+	float m_speed, m_maxSpeed, m_boostSpeed, m_rotation, m_maxVelocity;
 
 	int m_health, m_animatedColour, m_iColour, m_bColour, m_powerupTime;
 

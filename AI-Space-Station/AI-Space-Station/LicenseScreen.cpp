@@ -1,14 +1,3 @@
-//
-//
-//
-//
-// C00204076
-// Brandon Sea-Dempsey
-// Started at 10:59 11 January 2019
-// Finished at
-// Time taken:
-// Known bugs:
-
 #include "LicenseScreen.h"
 
 /// <summary>
