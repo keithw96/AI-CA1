@@ -32,7 +32,7 @@ AlienNest::AlienNest(sf::Vector2f pos, sf::Sprite sprite, sf::Sprite projectileS
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="playerPos"></param>
-void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos)
+void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile> boundaryTiles)
 {
 	if (m_position.x - playerPos.x < 300 && m_position.x - playerPos.x > -300 && m_position.y - playerPos.y < 300 && m_position.y - playerPos.y > -300 && m_projectiles.size() < 1)
 	{
@@ -42,7 +42,7 @@ void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos)
 
 	for (int i = 0; i < m_projectiles.size(); i++)
 	{
-		m_projectiles[i]->Update(deltaTime, playerPos);
+		m_projectiles[i]->update(deltaTime, playerPos, boundaryTiles);
 
 		if (m_projectiles[i]->m_alive == false)
 		{
@@ -71,7 +71,7 @@ void AlienNest::render(sf::RenderWindow *window, sf::Vector2f scale)
 	window->draw(m_sprite);
 	for (auto& p : m_projectiles)
 	{
-		p->Render(window, scale);
+		p->render(window, scale);
 	}
 
 	for (auto& pred : m_predators)

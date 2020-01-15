@@ -5,6 +5,7 @@
 #include <list>
 #include "Projectile.h"
 #include "Predator.h"
+#include "Tile.h"
 
 class AlienNest
 {
@@ -12,7 +13,7 @@ public:
 	AlienNest(sf::Vector2f pos, sf::Sprite sprite, sf::Sprite projectileSprite, sf::Sprite predatorSprite);
 
 	void render(sf::RenderWindow *window, sf::Vector2f scale);
-	void update(sf::Time deltaTime, sf::Vector2f playerPos);
+	void update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile> boundaryTiles);
 
 	std::vector<Predator*> m_predators;
 private:

@@ -89,9 +89,12 @@ private:
 	sf::Sprite m_projectileSprite;
 
 	std::vector<Tile> m_tileMap;
+	std::vector<Tile> m_boundaryTiles;
 	std::vector<AlienNest> m_nestArr;
+
 	/*
-	1 = black tile
+	0 = nonCollision Black tile
+	1 = Collision black tile
 	2 = vertical tile
 	3 = horizontal
 	4 = top left corner

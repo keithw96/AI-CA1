@@ -34,8 +34,8 @@ void Player::init()
 	m_rotation = 0;
 	m_speed = 0;
 	m_maxVelocity = 3;
-	m_coolDown = 0;
-	m_fireRate = 100;
+	m_fireRate = 50;
+	m_coolDown = m_fireRate;
 	m_health = 100;
 	m_animatedColour = 0;
 
@@ -48,6 +48,7 @@ void Player::init()
 	m_sprite.setPosition(m_position);
 	m_sprite.setOrigin(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2);
 	m_sprite.setRotation(0);
+	m_projectileSprite.setTexture(m_projectileTxt);
 
 	m_invincible = false;
 	m_boosted = false;
@@ -67,18 +68,18 @@ void Player::loadTextures()
 	{
 		std::cout << "Error! Unable to load PlayerShip.png from game files!" << std::endl;
 	}
-
-	m_projectileTxt.loadFromFile("ASSETS/Textures/playerLaserBall.png");
+	if (!m_projectileTxt.loadFromFile("ASSETS/Textures/playerLaserBall.png"))
+	{
+		std::cout << "Error! Unable to load playerLaserBall.png from game files!" << std::endl;
+	}
 }
 
 /// <summary>
 /// Updates the player's movements and collisions
 /// </summary>
 /// <param name="deltaTime"></param>
-void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile>& tilemap, int playerNumber)
+void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile> boundaryTiles, int playerNumber)
 {
-	m_position = m_sprite.getPosition();
-	createBoundaryTileVector(tilemap);
 	powerupColourAnimate();
 	powerupTime();
 
@@ -94,7 +95,6 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	shoot();
 	powerupCollision(powerup);
 
-	m_sprite.setPosition(m_position);
 
 	if (playerNumber == 1)
 	{
@@ -102,17 +102,19 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	}
 
 	move();
-	tileCollision(m_boundaryTiles, playerNumber);
+	tileCollision(boundaryTiles, playerNumber);
+	updateBullets(deltaTime, boundaryTiles);
 }
 
 /// <summary>
 /// renders the player
 /// </summary>
 /// <param name="window"></param>
-void Player::render(sf::RenderWindow& window, sf::Vector2f scale)
+void Player::render(sf::RenderWindow* window, sf::Vector2f scale)
 {
 	m_sprite.setScale(scale);
-	window.draw(m_sprite);
+	window->draw(m_sprite);
+	renderBullets(window, scale);
 }
 
 ///// <summary>
@@ -188,6 +190,9 @@ void Player::render(sf::RenderWindow& window, sf::Vector2f scale)
 //	m_sprite.setRotation(m_angle);
 //}
 
+/// <summary>
+/// Raises or lowers the players speed via the up down W or S keys
+/// </summary>
 void Player::speed()
 {
 	if (sf::Keyboard::isKeyPressed(m_keyboard.W) || sf::Keyboard::isKeyPressed(m_keyboard.Up) && m_speed < m_maxSpeed)
@@ -201,6 +206,9 @@ void Player::speed()
 	}
 }
 
+/// <summary>
+/// rotates the player if the left, right, A or D key is pressed down;
+/// </summary>
 void Player::rotate()
 {
 
@@ -215,7 +223,7 @@ void Player::rotate()
 
 	if (sf::Keyboard::isKeyPressed(m_keyboard.D) || sf::Keyboard::isKeyPressed(m_keyboard.Right))
 	{
-		m_rotation += 2;
+		m_rotation += 5;
 		if (m_rotation > 360)
 		{
 			m_rotation = 0;
@@ -224,7 +232,9 @@ void Player::rotate()
 	m_sprite.setRotation(m_rotation);
 }
 
-
+/// <summary>
+/// The players movement code
+/// </summary>
 void Player::move()
 {
 	m_velocity.x = cos((M_PI / 180) * m_rotation) * m_speed;
@@ -234,12 +244,58 @@ void Player::move()
 	m_sprite.setPosition(m_position);
 }
 
+/// <summary>
+/// creates a projectile and adds it to the projectile vector if the count is greater than the fire rate
+/// </summary>
 void Player::shoot()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (m_coolDown > m_fireRate)
+		{
+			Projectile* projectile = new Projectile(m_position, m_projectileSprite, m_rotation, false);
+			m_projectiles.push_back(projectile);
+			m_coolDown = 0;
+		}
+		
+	}
+	m_coolDown++;
+}
+
+/// <summary>
+/// updates all of the bullets in the vector
+/// deletes any that are dead
+/// </summary>
+/// <param name="deltatime"></param>
+/// <param name="boundaryTiles"></param>
+void Player::updateBullets(sf::Time deltatime, std::vector<Tile> boundaryTiles)
+{
+	for (int i = 0; i < m_projectiles.size(); i++)
+	{
+		m_projectiles[i]->update(deltatime, m_position, boundaryTiles);
 
 
+		if (m_projectiles[i]->m_alive == false)
+		{
+			m_projectiles[i]->~Projectile();
+			m_projectiles[i] = nullptr;
+			m_projectiles.erase(m_projectiles.begin() + i);
+			i--;
+		}
+	}
+}
 
-
+/// <summary>
+/// Renders the bullets
+/// </summary>
+/// <param name="window"></param>
+/// <param name="scale"></param>
+void Player::renderBullets(sf::RenderWindow* window, sf::Vector2f scale)
+{
+	for (auto b : m_projectiles)
+	{
+		b->render(window, scale);
+	}
 }
 
 void Player::workerCollision()
@@ -314,31 +370,10 @@ void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 				{
 					m_position -= m_velocity;
 					m_sprite.setPosition(m_position);
-					std::cout << m_position.x << ", " << m_position.y << std::endl;
 				}
 			}
 		}
 	}
-}
-
-/// <summary>
-/// creats a vector of the boundary tiles
-/// </summary>
-/// <param name="tilemap"></param>
-void Player::createBoundaryTileVector(std::vector<Tile> &tilemap)
-{
-	if (m_mapCreated == false)
-	{
-		for (int i = 0; i < tilemap.size(); i++)
-		{
-			if (tilemap[i].getType() == 1)
-			{
-				m_boundaryTiles.push_back(tilemap[i]);
-			}
-
-		}
-	}
-	m_mapCreated = true;
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ Predator::Predator(sf::Vector2f pos, sf::Sprite sprite, sf::Vector2f roomCenter)
 	m_startPos = pos;
 	m_position = pos;
 	m_sprite = sprite;
-	m_velocity = 7;
+	m_velocity = 3;
 	m_roomCenter = roomCenter;
 	m_rotation = 0;
 	m_sprite.setPosition(m_position);

@@ -10,7 +10,27 @@ Projectile::Projectile(sf::Vector2f pos, sf::Sprite sprite, bool homing)
 {
 	m_position = pos;
 	m_sprite = sprite;
-	m_velocity = 5.0f;
+	m_speed = 4.0f;
+	m_homing = homing;
+	count = 0;
+	m_alive = true;
+	m_sprite.setPosition(m_position);
+	m_sprite.setOrigin(sf::Vector2f(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2));
+}
+
+/// <summary>
+/// Second constructor for bullets fired by the player
+/// </summary>
+/// <param name="position"></param>
+/// <param name="sprite"></param>
+/// <param name="rotation"></param>
+/// <param name="homing"></param>
+Projectile::Projectile(sf::Vector2f position, sf::Sprite sprite, float rotation, bool homing)
+{
+	m_position = position;
+	m_sprite = sprite;
+	m_speed = 10.0f;
+	m_directionRotation = rotation;
 	m_homing = homing;
 	count = 0;
 	m_alive = true;
@@ -31,20 +51,31 @@ Projectile::~Projectile()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="playerPos"></param>
-void Projectile::Update(sf::Time deltaTime, sf::Vector2f playerPos)
+void Projectile::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile> boundaryTiles)
 {
 	if (m_homing && m_alive)
 	{
 		count++;
-		Homing(playerPos);
-
+		homing(playerPos);
+		boundaryCollision(boundaryTiles);
 		if (count >= 200)
 		{
 			m_alive = false;
 		}
+		
 	}
-	
-	
+	else if (m_alive)
+	{
+		count++;
+		notHoming();
+		boundaryCollision(boundaryTiles);
+		if (count >= 200)
+		{
+			m_alive = false;
+		}
+		std::cout << m_sprite.getPosition().x << ", " << m_sprite.getPosition().y << std::endl;
+	}
+	rotate();
 }
 
 /// <summary>
@@ -52,7 +83,7 @@ void Projectile::Update(sf::Time deltaTime, sf::Vector2f playerPos)
 /// </summary>
 /// <param name="window"></param>
 /// <param name="scale"></param>
-void Projectile::Render(sf::RenderWindow *window, sf::Vector2f scale)
+void Projectile::render(sf::RenderWindow *window, sf::Vector2f scale)
 {
 	if (m_alive)
 	{
@@ -64,27 +95,70 @@ void Projectile::Render(sf::RenderWindow *window, sf::Vector2f scale)
 /// homes the projectile in on the players current position
 /// </summary>
 /// <param name="playerPos"></param>
-void Projectile::Homing(sf::Vector2f playerPos)
+void Projectile::homing(sf::Vector2f playerPos)
 {
 	if (m_position.x < playerPos.x)
 	{
-		m_position.x += m_velocity;
+		m_position.x += m_speed;
 	}
 
 	if (m_position.x > playerPos.x)
 	{
-		m_position.x -= m_velocity;
+		m_position.x -= m_speed;
 	}
 
 	if (m_position.y < playerPos.y)
 	{
-		m_position.y += m_velocity;
+		m_position.y += m_speed;
 	}
 
 	if (m_position.y > playerPos.y)
 	{
-		m_position.y -= m_velocity;
+		m_position.y -= m_speed;
 	}
 
 	m_sprite.setPosition(m_position);
+}
+
+/// <summary>
+/// Player fired bullet
+/// </summary>
+void Projectile::notHoming()
+{
+	m_velocity.x = cos((M_PI / 180) * m_directionRotation) * m_speed;
+	m_velocity.y = sin((M_PI / 180) * m_directionRotation) * m_speed;
+
+	m_position += m_velocity;
+	m_sprite.setPosition(m_position);
+}
+
+/// <summary>
+/// Rotates the projectile
+/// </summary>
+void Projectile::rotate()
+{
+	m_rotation += 25;
+
+	if (m_rotation > 360)
+	{
+		m_rotation = 0;
+	}
+
+	m_sprite.setRotation(m_rotation);
+}
+
+/// <summary>
+/// Detects if the bullet sprite intersects the boundary tiles 
+/// sets the alive boolean to false
+/// </summary>
+/// <param name="boundaryTiles"></param>
+void Projectile::boundaryCollision(std::vector<Tile> boundaryTiles)
+{
+	for (auto t : boundaryTiles)
+	{
+		if (m_sprite.getGlobalBounds().intersects(t.getSprite().getGlobalBounds()))
+		{
+			m_alive = false;
+		}
+	}
 }

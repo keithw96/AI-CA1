@@ -3,7 +3,7 @@
 /// <summary>
 /// constructor
 /// </summary>
-Game::Game() :
+Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
 	gameState{GameState::GAME}
@@ -47,7 +47,6 @@ Game::~Game()
 
 }
 
-//
 void Game::run()
 {
 	sf::Clock clock;
@@ -64,7 +63,6 @@ void Game::run()
 			update(timeSinceLastUpdate);
 			timeSinceLastUpdate = sf::Time::Zero;
 		}
-
 		render();
 	}
 }
@@ -75,7 +73,6 @@ void Game::run()
 /// <param name="deltaTime"></param>
 void Game::update(sf::Time deltaTime)
 {
-	//
 	if (!is_running)
 	{
 		m_window.close();
@@ -86,36 +83,30 @@ void Game::update(sf::Time deltaTime)
 	{
 	case GameState::SPLASH:
 		m_splash->update(deltaTime);
-		//
 		if (m_splash->getScreenTime() > 270)
 		{
 			setGameState(GameState::LICENSE);
 		}
 		break;
 	case GameState::LICENSE:
-		//
 		m_license->update(deltaTime);
-		//
 		if (m_license->getScreenTime() > 270)
 		{
 			setGameState(GameState::GAME);
 		}
 		break;
 	case GameState::MENU:
-
 		break;
 	case GameState::GAME:
-		//
-
-		m_player->update(deltaTime, m_view, m_powerup, m_tileMap, 1);
-		m_miniPlayer->update(deltaTime, m_view, m_powerup, m_tileMap, 2);
+		m_player->update(deltaTime, m_view, m_powerup, m_boundaryTiles, 1);
+		m_miniPlayer->update(deltaTime, m_view, m_powerup, m_boundaryTiles, 2);
 
 		m_miniPlayer->setPosition(m_player->getPosition());
 
 		m_powerup->update(deltaTime);
 		for (int i = 0; i < m_nestArr.size(); i++)
 		{
-			m_nestArr[i].update(deltaTime, m_player->getPosition());
+			m_nestArr[i].update(deltaTime, m_player->getPosition(), m_boundaryTiles);
 		}
 
 		break;
@@ -157,7 +148,6 @@ void Game::processEvents()
 /// </summary>
 void Game::render()
 {
-	//
 	m_window.clear(sf::Color(0, 0, 0));
 
 	// Updates rendering based on current state
@@ -173,9 +163,7 @@ void Game::render()
 
 		break;
 	case GameState::GAME:
-		//
-
-//game render
+		//game render
 		m_window.setView(m_view);
 
 		for (int i = 0; i < m_tileMap.size(); i++)
@@ -188,8 +176,7 @@ void Game::render()
 			m_nestArr[i].render(&m_window, sf::Vector2f(1.0, 1.0));
 		}
 
-		m_player->render(m_window, sf::Vector2f(1.0f, 1.0f));
-		//
+		m_player->render(&m_window, sf::Vector2f(1.0f, 1.0f));
 		m_powerup->render(m_window);
 
 		m_window.setView(miniMap);
@@ -205,8 +192,7 @@ void Game::render()
 			m_nestArr[i].render(&m_window, sf::Vector2f(2.0, 2.0));
 		}
 
-		m_miniPlayer->render(m_window, sf::Vector2f(10.0f, 10.0f));
-		//
+		m_miniPlayer->render(&m_window, sf::Vector2f(10.0f, 10.0f));
 		m_powerup->render(m_window);
 		break;
 	case GameState::CONTROLS:
@@ -216,8 +202,6 @@ void Game::render()
 
 		break;
 	}
-
-	//
 	m_window.display();
 }
 
@@ -291,6 +275,7 @@ void Game::determineTile(int type, int x, int y)
 	}
 	if (type == 1) {
 		m_tileMap.push_back(Tile(sf::Vector2f(x, y), m_black_tileSprite, 1));
+		m_boundaryTiles.push_back(Tile(sf::Vector2f(x, y), m_black_tileSprite, 1));
 	}
 	if (type == 2) {
 		m_tileMap.push_back(Tile(sf::Vector2f(x, y), m_verticalTileSprite, 2));
