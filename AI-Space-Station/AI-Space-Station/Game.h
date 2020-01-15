@@ -48,13 +48,19 @@ private:
 	void determineTile(int type, int x, int y);
 
 	sf::RenderWindow m_window;
-
 	sf::View m_view;
+	sf::View miniMap;
+
+	int m_windowHeight;
+	int m_windowWidth;
+	int m_healthBarHeight;
+	int m_healthBarWidth;
+
+	sf::RectangleShape m_healthBarBorder;
+	sf::RectangleShape m_healthBar;
 
 	bool is_running;
 
-	sf::View playerView;
-	sf::View miniMap;
 
 	sf::Texture m_horizontalTileTexture;
 	sf::Texture m_verticalTileTexture;

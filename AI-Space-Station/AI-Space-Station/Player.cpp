@@ -104,6 +104,7 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	move();
 	tileCollision(boundaryTiles, playerNumber);
 	updateBullets(deltaTime, boundaryTiles);
+
 }
 
 /// <summary>
@@ -195,12 +196,12 @@ void Player::render(sf::RenderWindow* window, sf::Vector2f scale)
 /// </summary>
 void Player::speed()
 {
-	if (sf::Keyboard::isKeyPressed(m_keyboard.W) || sf::Keyboard::isKeyPressed(m_keyboard.Up) && m_speed < m_maxSpeed)
+	if (m_speed < m_maxSpeed && sf::Keyboard::isKeyPressed(m_keyboard.W))
 	{
 		m_speed += 0.5f;
 	}
 
-	if (sf::Keyboard::isKeyPressed(m_keyboard.S) || sf::Keyboard::isKeyPressed(m_keyboard.Down) && m_speed > 0)
+	if (m_speed > 0 && sf::Keyboard::isKeyPressed(m_keyboard.S))
 	{
 		m_speed -= 0.5f;
 	}
@@ -458,3 +459,8 @@ void Player::setPosition(sf::Vector2f position)
 	m_sprite.setPosition(m_position);
 }
 
+
+int Player::getHealth()
+{
+	return m_health;
+}

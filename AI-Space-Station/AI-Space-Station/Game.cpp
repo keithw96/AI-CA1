@@ -4,7 +4,7 @@
 /// constructor
 /// </summary>
 Game::Game():
-	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
+	m_window{ sf::VideoMode{1920, 1080, 32}, "AI Space Station"},
 	is_running{ true },
 	gameState{GameState::GAME}
 {
@@ -13,7 +13,7 @@ Game::Game():
 	m_view.zoom(1.5f);
 
 	m_view.zoom(0.35f);
-
+	
 	miniMap.reset(sf::FloatRect(0, 0, m_window.getSize().x / 2, m_window.getSize().y / 2));
 	miniMap.setViewport(sf::FloatRect(1.1f - (1.f*miniMap.getSize().x) / m_window.getSize().x - 0.04f, 0.3f - (1.f*miniMap.getSize().y) / m_window.getSize().y - 0.02f, (1.f*miniMap.getSize().x) / m_window.getSize().x, (1.f*miniMap.getSize().y) / m_window.getSize().y));
 	miniMap.zoom(11.0f);
@@ -37,6 +37,18 @@ Game::Game():
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
+
+	m_healthBarHeight = 40;
+	m_healthBarWidth = 200;
+	m_healthBarBorder = sf::RectangleShape(sf::Vector2f(m_healthBarWidth, m_healthBarHeight));
+	m_healthBarBorder.setPosition(m_view.getCenter().x - ((m_window.getSize().x / 2) - 5), m_view.getCenter().y + ((m_window.getSize().y / 2) - (m_healthBarHeight + 5)));
+	m_healthBarBorder.setOutlineColor(sf::Color::Red);
+	m_healthBarBorder.setOutlineThickness(5);
+	m_healthBarBorder.setFillColor(sf::Color::Transparent);
+
+	m_healthBar = sf::RectangleShape(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
+	m_healthBar.setPosition(m_view.getCenter().x - ((m_window.getSize().x / 2) - 5), m_view.getCenter().y + ((m_window.getSize().y / 2) - (m_healthBarHeight + 5)));
+	m_healthBar.setFillColor(sf::Color::Green);
 }
 
 /// <summary>
@@ -109,6 +121,12 @@ void Game::update(sf::Time deltaTime)
 			m_nestArr[i].update(deltaTime, m_player->getPosition(), m_boundaryTiles);
 		}
 
+		std::cout << m_window.getSize().x << std::endl;
+
+		m_healthBar.setPosition((float)(m_player->getPosition().x - (m_window.getSize().x / 2) + (m_healthBarWidth * 2)), (float)(m_player->getPosition().y + 350));
+		m_healthBar.setSize(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
+		m_healthBarBorder.setPosition((float)(m_player->getPosition().x - (m_window.getSize().x / 2) + (m_healthBarWidth * 2)), (float)(m_player->getPosition().y + 350));
+
 		break;
 	case GameState::CONTROLS:
 
@@ -178,6 +196,9 @@ void Game::render()
 
 		m_player->render(&m_window, sf::Vector2f(1.0f, 1.0f));
 		m_powerup->render(m_window);
+
+		m_window.draw(m_healthBar);
+		m_window.draw(m_healthBarBorder);
 
 		m_window.setView(miniMap);
 
