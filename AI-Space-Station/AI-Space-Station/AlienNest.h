@@ -14,6 +14,14 @@ public:
 
 	void render(sf::RenderWindow *window, sf::Vector2f scale);
 	void update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile> boundaryTiles);
+	std::vector<Predator*> getPredators();
+	std::vector<Projectile*> getProjectiles();
+	sf::Sprite getSprite();
+/// 
+/// </summary>/ <summary>
+/// 
+/// </summary>
+/// <returns></returns>rite();
 
 	std::vector<Predator*> m_predators;
 private:

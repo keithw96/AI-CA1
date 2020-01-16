@@ -60,6 +60,33 @@ void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<T
 }
 
 /// <summary>
+/// Returns the array of predators that are children of the nest
+/// </summary>
+/// <returns></returns>
+std::vector<Predator*> AlienNest::getPredators()
+{
+	return m_predators;
+}
+
+/// <summary>
+/// returns the array of projectiles that are childeren of the nest
+/// </summary>
+/// <returns></returns>
+std::vector<Projectile*> AlienNest::getProjectiles()
+{
+	return m_projectiles;
+}
+
+/// <summary>
+/// Returns the nests sprite
+/// </summary>
+/// <returns></returns>
+sf::Sprite AlienNest::getSprite()
+{
+	return m_sprite;
+}
+
+/// <summary>
 /// Renders the nest and its predators 
 /// and projectiles 
 /// </summary>

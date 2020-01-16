@@ -46,6 +46,7 @@ private:
 	void render();
 	void loadSprites();
 	void determineTile(int type, int x, int y);
+	void updateHealthBar();
 
 	sf::RenderWindow m_window;
 	sf::View m_view;

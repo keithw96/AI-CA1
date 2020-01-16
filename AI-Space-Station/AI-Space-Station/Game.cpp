@@ -4,7 +4,7 @@
 /// constructor
 /// </summary>
 Game::Game():
-	m_window{ sf::VideoMode{1920, 1080, 32}, "AI Space Station"},
+	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
 	gameState{GameState::GAME}
 {
@@ -42,7 +42,7 @@ Game::Game():
 	m_healthBarWidth = 200;
 	m_healthBarBorder = sf::RectangleShape(sf::Vector2f(m_healthBarWidth, m_healthBarHeight));
 	m_healthBarBorder.setPosition(m_view.getCenter().x - ((m_window.getSize().x / 2) - 5), m_view.getCenter().y + ((m_window.getSize().y / 2) - (m_healthBarHeight + 5)));
-	m_healthBarBorder.setOutlineColor(sf::Color::Red);
+	m_healthBarBorder.setOutlineColor(sf::Color::Magenta);
 	m_healthBarBorder.setOutlineThickness(5);
 	m_healthBarBorder.setFillColor(sf::Color::Transparent);
 
@@ -123,9 +123,11 @@ void Game::update(sf::Time deltaTime)
 
 		std::cout << m_window.getSize().x << std::endl;
 
-		m_healthBar.setPosition((float)(m_player->getPosition().x - (m_window.getSize().x / 2) + (m_healthBarWidth * 2)), (float)(m_player->getPosition().y + 350));
+		m_healthBar.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
 		m_healthBar.setSize(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
-		m_healthBarBorder.setPosition((float)(m_player->getPosition().x - (m_window.getSize().x / 2) + (m_healthBarWidth * 2)), (float)(m_player->getPosition().y + 350));
+		m_healthBarBorder.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
+
+		updateHealthBar();
 
 		break;
 	case GameState::CONTROLS:
@@ -330,5 +332,17 @@ void Game::determineTile(int type, int x, int y)
 	}
 	if (type == 12) {
 		m_tileMap.push_back(Tile(sf::Vector2f(x, y), m_tJunctionDownSprite, 12));
+	}
+}
+
+void Game::updateHealthBar()
+{
+	if (m_player->getHealth() < 66)
+	{
+		m_healthBar.setFillColor(sf::Color::Yellow);
+	}
+	if (m_player->getHealth() < 33)
+	{
+		m_healthBar.setFillColor(sf::Color::Red);
 	}
 }

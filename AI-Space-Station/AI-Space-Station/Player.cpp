@@ -80,6 +80,7 @@ void Player::loadTextures()
 /// <param name="deltaTime"></param>
 void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile> boundaryTiles, int playerNumber)
 {
+	m_health--;
 	powerupColourAnimate();
 	powerupTime();
 
