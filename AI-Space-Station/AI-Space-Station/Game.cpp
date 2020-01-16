@@ -150,6 +150,16 @@ void Game::update(sf::Time deltaTime)
 			m_worker[i].update();
 			m_worker[i].checkWallCollision(m_tileMap);
 			m_worker[i].checkPlayerCollision(m_player->getBody()); //need to get player sprite
+			m_worker[i].checkSweeperCollision(m_sweeper.getBody());
+		}
+
+		m_sweeper.update();
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			if (m_worker[i].getAlive())
+			{
+				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
+			}
 		}
 		break;
 	case GameState::CONTROLS:
@@ -226,6 +236,7 @@ void Game::render()
 				m_window.draw(m_worker[i].getBody());
 			}
 		}
+		m_window.draw(m_sweeper.getBody());
 		m_player->render(m_window, sf::Vector2f(1.0f, 1.0f));
 		//
 		m_powerup->render(m_window);

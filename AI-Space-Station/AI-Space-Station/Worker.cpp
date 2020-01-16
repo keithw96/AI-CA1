@@ -77,3 +77,12 @@ void Worker::checkPlayerCollision(sf::Sprite player)
 		//this->~Worker();
 	}
 }
+
+void Worker::checkSweeperCollision(sf::RectangleShape sweeper)
+{
+	if (m_body.getGlobalBounds().intersects(sweeper.getGlobalBounds()))
+	{
+		m_alive = false;
+		//this->~Worker();
+	}
+}

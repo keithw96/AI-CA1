@@ -14,6 +14,7 @@ public:
 	bool getAlive();
 	void checkWallCollision(std::vector<Tile>& tilemap);
 	void checkPlayerCollision(sf::Sprite player);
+	void checkSweeperCollision(sf::RectangleShape sweeper);
 
 private:
 	sf::RectangleShape m_body;//visual representation

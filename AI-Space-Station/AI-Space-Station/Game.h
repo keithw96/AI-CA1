@@ -18,6 +18,7 @@
 #include "AlienNest.h"
 #include "Predator.h"
 #include "Worker.h"
+#include "Sweeper.h"
 
 //
 class Splash;
@@ -161,6 +162,7 @@ private:
 	Player *m_miniPlayer;
 	PowerUp * m_powerup;
 	Worker m_worker[NUM_OF_WORKERS];
+	Sweeper m_sweeper;
 };
 
 #include "SplashScreen.h"
