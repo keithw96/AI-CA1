@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="AlienNest.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="LicenseScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="AlienNest.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOverScreen.h" />
     <ClInclude Include="LicenseScreen.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />

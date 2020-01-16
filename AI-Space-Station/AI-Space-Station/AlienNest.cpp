@@ -10,19 +10,7 @@
 /// <param name="predatorSprite"></param>
 AlienNest::AlienNest(sf::Vector2f pos, sf::Sprite sprite, sf::Sprite projectileSprite, sf::Sprite predatorSprite)
 {
-	m_position = pos;
-	m_projectileSprite = projectileSprite;
-	m_sprite = sprite;
-	m_predatorSprite = predatorSprite;
-
-	m_sprite.setPosition(m_position);
-	m_sprite.setOrigin(sf::Vector2f(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2));
-
-	Predator * pred1 = new Predator(sf::Vector2f(m_position.x + m_sprite.getTextureRect().width, m_position.y), predatorSprite, m_position);
-	Predator * pred2 = new Predator(sf::Vector2f(m_position.x - m_sprite.getTextureRect().width, m_position.y), predatorSprite, m_position);
-
-	m_predators.push_back(pred1);
-	m_predators.push_back(pred2);
+	init(pos, sprite, projectileSprite, predatorSprite);
 }
 
 /// <summary>
@@ -57,6 +45,23 @@ void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<T
 	{
 		pred->update(deltaTime, playerPos);
 	}
+}
+
+void AlienNest::init(sf::Vector2f pos, sf::Sprite sprite, sf::Sprite projectileSprite, sf::Sprite predatorSprite)
+{
+	m_position = pos;
+	m_projectileSprite = projectileSprite;
+	m_sprite = sprite;
+	m_predatorSprite = predatorSprite;
+
+	m_sprite.setPosition(m_position);
+	m_sprite.setOrigin(sf::Vector2f(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2));
+
+	Predator* pred1 = new Predator(sf::Vector2f(m_position.x + m_sprite.getTextureRect().width, m_position.y), predatorSprite, m_position);
+	Predator* pred2 = new Predator(sf::Vector2f(m_position.x - m_sprite.getTextureRect().width, m_position.y), predatorSprite, m_position);
+
+	m_predators.push_back(pred1);
+	m_predators.push_back(pred2);
 }
 
 /// <summary>

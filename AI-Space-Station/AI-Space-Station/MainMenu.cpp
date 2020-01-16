@@ -1,5 +1,8 @@
 #include "MainMenu.h"
 
+/// <summary>
+/// 
+/// </summary>
 MainMenu::MainMenu()
 {
 	init();

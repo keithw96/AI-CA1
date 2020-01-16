@@ -8,6 +8,8 @@ Game::Game():
 	is_running{ true },
 	gameState{GameState::SPLASH}
 {
+	m_menuView = m_window.getView();
+
 	m_view.setCenter(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	m_view.setSize(2500, 2000);
 	m_view.zoom(1.5f);
@@ -35,6 +37,7 @@ Game::Game():
 	m_splash = new Splash();
 	m_license = new License();
 	m_mainMenu = new MainMenu();
+	m_gameOverScreen = new GameOverScreen();
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
@@ -166,12 +169,15 @@ void Game::update(sf::Time deltaTime)
 				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
 			}
 		}
-		break;
-	case GameState::CONTROLS:
+
+		if (m_player->getHealth() <= 0)
+		{
+			gameState = GameState::GAMEOVER;
+		}
 
 		break;
 	case GameState::GAMEOVER:
-
+		m_gameOverScreen->update(deltaTime, m_window);
 		break;
 	}
 
@@ -217,6 +223,7 @@ void Game::render()
 		m_license->render(m_window);
 		break;
 	case GameState::MENU:
+		m_window.setView(m_menuView);
 		m_mainMenu->render(m_window);
 		break;
 	case GameState::GAME:
@@ -263,11 +270,9 @@ void Game::render()
 		m_miniPlayer->render(&m_window, sf::Vector2f(10.0f, 10.0f));
 		m_powerup->render(m_window);
 		break;
-	case GameState::CONTROLS:
-
-		break;
 	case GameState::GAMEOVER:
-
+		m_window.setView(m_menuView);
+		m_gameOverScreen->render(m_window);
 		break;
 	}
 	m_window.display();
@@ -390,4 +395,9 @@ void Game::updateHealthBar()
 	{
 		m_healthBar.setFillColor(sf::Color::Red);
 	}
+}
+
+void Game::resetGame()
+{
+	m_player->init();
 }

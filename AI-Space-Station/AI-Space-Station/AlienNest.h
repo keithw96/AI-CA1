@@ -14,6 +14,7 @@ public:
 
 	void render(sf::RenderWindow *window, sf::Vector2f scale);
 	void update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile> boundaryTiles);
+	void init(sf::Vector2f pos, sf::Sprite sprite, sf::Sprite projectileSprite, sf::Sprite predatorSprite);
 	std::vector<Predator*> getPredators();
 	std::vector<Projectile*> getProjectiles();
 	sf::Sprite getSprite();

@@ -21,6 +21,7 @@ public:
 	void update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile> boundaryTiles, int playerNumber);
 	void render(sf::RenderWindow* window, sf::Vector2f scale);
 
+	void init();
 	int getHealth();
 	sf::Vector2f getPosition();
 	void setPosition(sf::Vector2f position);
@@ -44,7 +45,6 @@ private:
 	void enemyCollision();
 	void powerupCollision(PowerUp* powerup);
 
-	void init();
 	void loadTextures();
 
 

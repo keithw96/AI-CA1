@@ -91,6 +91,16 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 		m_bColour = 1;
 	}
 
+	if (m_health < 0)
+	{
+		m_health = 0;
+	}
+
+	if (m_health > 100)
+	{
+		m_health = 100;
+	}
+
 	rotate();
 	speed();
 	shoot();

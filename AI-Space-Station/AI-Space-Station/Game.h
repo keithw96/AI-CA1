@@ -13,6 +13,7 @@
 #include "LicenseScreen.h"
 #include "Player.h"
 #include "Power-Up.h"
+#include "GameOverScreen.h"
 
 class Splash;
 class License;
@@ -22,7 +23,7 @@ class AlienNest;
 
 enum class GameState
 {
-	SPLASH, LICENSE, MENU, GAME, CONTROLS, GAMEOVER
+	SPLASH, LICENSE, MENU, GAME, GAMEOVER
 };
 
 struct VectorComparator
@@ -52,8 +53,9 @@ private:
 	void loadSprites();
 	void determineTile(int type, int x, int y);
 	void updateHealthBar();
-
+	void resetGame();
 	sf::RenderWindow m_window;
+	sf::View m_menuView;
 	sf::View m_view;
 	sf::View miniMap;
 
@@ -166,6 +168,7 @@ private:
 	Player* m_miniPlayer;
 	PowerUp* m_powerup;
 	MainMenu* m_mainMenu;
+	GameOverScreen* m_gameOverScreen;
 };
 
 #endif // !GAME_H
