@@ -156,17 +156,15 @@ private:
 	{ 0, 0, 0, 0,  0,  0, 0,  0,  0,  0, 0, 1, 1, 1,  1,  1,  1,  1,  0, 0, 0,  0,  0,  0,  0,  0,   0,  0, 0, 0, 0, 0, } ,
 	};
 
-	//
-	Predator * m_predator;
-	Splash * m_splash;
-	License * m_license;
-	Player * m_player;
-	Player *m_miniPlayer;
-	PowerUp * m_powerup;
+
 	Worker m_worker[NUM_OF_WORKERS];
 	Sweeper m_sweeper;
+	Predator* m_predator;
+	Splash* m_splash;
+	License* m_license;
 	Player* m_player;
 	Player* m_miniPlayer;
+	PowerUp* m_powerup;
 	MainMenu* m_mainMenu;
 };
 
