@@ -49,6 +49,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sweeper.cpp">
+    <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,6 +85,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sweeper.h">
+    <ClInclude Include="MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

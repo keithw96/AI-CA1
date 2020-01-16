@@ -6,7 +6,7 @@
 Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
-	gameState{GameState::GAME}
+	gameState{GameState::SPLASH}
 {
 	m_view.setCenter(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	m_view.setSize(2500, 2000);
@@ -34,6 +34,7 @@ Game::Game():
 
 	m_splash = new Splash();
 	m_license = new License();
+	m_mainMenu = new MainMenu();
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
@@ -118,10 +119,16 @@ void Game::update(sf::Time deltaTime)
 		m_license->update(deltaTime);
 		if (m_license->getScreenTime() > 270)
 		{
-			setGameState(GameState::GAME);
+			setGameState(GameState::MENU);
 		}
 		break;
 	case GameState::MENU:
+		m_mainMenu->update(deltaTime, m_window);
+		if (m_mainMenu->playClicked())
+		{
+			m_mainMenu->playClickedFalse();
+			gameState = GameState::GAME;
+		}
 		break;
 	case GameState::GAME:
 		m_player->update(deltaTime, m_view, m_powerup, m_boundaryTiles, 1);
@@ -210,7 +217,7 @@ void Game::render()
 		m_license->render(m_window);
 		break;
 	case GameState::MENU:
-
+		m_mainMenu->render(m_window);
 		break;
 	case GameState::GAME:
 		//game render

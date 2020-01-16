@@ -129,6 +129,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LicenseScreen.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Power-Up.cpp" />
     <ClCompile Include="Predator.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="AlienNest.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="LicenseScreen.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Power-Up.h" />
     <ClInclude Include="Predator.h" />

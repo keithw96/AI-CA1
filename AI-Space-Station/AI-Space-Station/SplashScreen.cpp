@@ -21,31 +21,30 @@ Splash::~Splash()
 /// </summary>
 void Splash::init()
 {
-	//
 	loadFonts();
-	//
+
 	m_screenTime = 0;
-	//
+
 	m_yPosOne = -100;
 	m_xPosTwo = -750;
 	m_xPosThree = 1800;
 	m_yPosThree = 2100;
-	//
+
 	m_positionOne = sf::Vector2f(800, -100);
 	m_positionTwo = sf::Vector2f(-750, 700);
 	m_positionThree = sf::Vector2f(1800, 2100); // 800, 800
-	//
+
 	m_textOne.setString("Developed and Test by");
 	m_textOne.setFont(m_font);
 	m_textOne.setCharacterSize(70);
 	m_textOne.setPosition(m_positionOne);
-	//
+
 	m_textTwo.setString("Keith Wilson - C00205321");
 	m_textTwo.setFont(m_font);
 	m_textTwo.setCharacterSize(70);
 	m_textTwo.setPosition(m_positionTwo);
-	//
-	m_textThree.setString("Brandon Seah-Dempsey - C00204076");
+
+	m_textThree.setString("Martin Farrel - C00157047");
 	m_textThree.setFont(m_font);
 	m_textThree.setCharacterSize(70);
 	m_textThree.setPosition(m_positionThree);
@@ -68,44 +67,32 @@ void Splash::loadFonts()
 /// <param name="deltaTime"></param>
 void Splash::update(sf::Time deltaTime)
 {
-	//
 	if (m_yPosOne < 600)
 	{
 		m_yPosOne += 5;
 		m_positionOne = sf::Vector2f(800, m_yPosOne);
 	}
-	//
 	if (m_xPosTwo < 800)
 	{
 		m_xPosTwo += 8;
 		m_positionTwo = sf::Vector2f(m_xPosTwo, 700);
 
 	}
-
-	//
 	if (m_xPosThree > 800)
 	{
 		m_xPosThree -= 8;
 		m_positionThree = sf::Vector2f(m_xPosThree, m_yPosThree);
 	}
-	//
 	if (m_yPosThree > 800)
 	{
 		m_yPosThree -= 10;
 		m_positionThree = sf::Vector2f(m_xPosThree, m_yPosThree);
 	}
-
-	//
 	m_textOne.setPosition(m_positionOne);
 	m_textTwo.setPosition(m_positionTwo);
 	m_textThree.setPosition(m_positionThree);
 
 	m_screenTime++;
-
-	if (m_screenTime > 270)
-	{
-		std::cout << "Splash" << std::endl;
-	}
 }
 
 /// <summary>

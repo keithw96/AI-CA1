@@ -17,19 +17,13 @@ public:
 	std::vector<Predator*> getPredators();
 	std::vector<Projectile*> getProjectiles();
 	sf::Sprite getSprite();
-/// 
-/// </summary>/ <summary>
-/// 
-/// </summary>
-/// <returns></returns>rite();
 
-	std::vector<Predator*> m_predators;
 private:
 	sf::Vector2f m_position;
-
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
 	sf::Sprite m_projectileSprite;
 	sf::Sprite m_predatorSprite;
 	std::vector<Projectile*> m_projectiles;
+	std::vector<Predator*> m_predators;
 };

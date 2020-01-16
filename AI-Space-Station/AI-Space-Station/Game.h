@@ -8,8 +8,12 @@
 #include "Predator.h"
 #include "Worker.h"
 #include "Sweeper.h"
+#include "MainMenu.h"
+#include "SplashScreen.h"
+#include "LicenseScreen.h"
+#include "Player.h"
+#include "Power-Up.h"
 
-//
 class Splash;
 class License;
 class Player;
@@ -29,7 +33,6 @@ struct VectorComparator
 	}
 };
 
-//
 class Game
 {
 public:
@@ -40,8 +43,8 @@ public:
 	void run();
 
 protected:
-	GameState gameState;
 
+	GameState gameState;
 private:
 	void processEvents();
 	void update(sf::Time deltaTime);
@@ -162,10 +165,9 @@ private:
 	PowerUp * m_powerup;
 	Worker m_worker[NUM_OF_WORKERS];
 	Sweeper m_sweeper;
+	Player* m_player;
+	Player* m_miniPlayer;
+	MainMenu* m_mainMenu;
 };
 
-#include "SplashScreen.h"
-#include "LicenseScreen.h"
-#include "Player.h"
-#include "Power-Up.h"
 #endif // !GAME_H
