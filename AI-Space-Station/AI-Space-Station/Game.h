@@ -6,6 +6,8 @@
 #include "Tile.h"
 #include "AlienNest.h"
 #include "Predator.h"
+#include "Worker.h"
+#include "Sweeper.h"
 
 //
 class Splash;
@@ -99,6 +101,7 @@ private:
 	std::vector<Tile> m_boundaryTiles;
 	std::vector<AlienNest> m_nestArr;
 
+	static const int NUM_OF_WORKERS = 15;
 	/*
 	0 = nonCollision Black tile
 	1 = Collision black tile
@@ -157,6 +160,8 @@ private:
 	Player * m_player;
 	Player *m_miniPlayer;
 	PowerUp * m_powerup;
+	Worker m_worker[NUM_OF_WORKERS];
+	Sweeper m_sweeper;
 };
 
 #include "SplashScreen.h"

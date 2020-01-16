@@ -49,6 +49,21 @@ Game::Game():
 	m_healthBar = sf::RectangleShape(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
 	m_healthBar.setPosition(m_view.getCenter().x - ((m_window.getSize().x / 2) - 5), m_view.getCenter().y + ((m_window.getSize().y / 2) - (m_healthBarHeight + 5)));
 	m_healthBar.setFillColor(sf::Color::Green);
+	m_worker[1].setPos(sf::Vector2f(600, 1200));
+	m_worker[2].setPos(sf::Vector2f(1000, 1300));
+	m_worker[3].setPos(sf::Vector2f(1000, 3200));
+	m_worker[4].setPos(sf::Vector2f(2750, 3300));
+	m_worker[5].setPos(sf::Vector2f(1000, 5000));
+	m_worker[6].setPos(sf::Vector2f(4000, 5200));
+	m_worker[7].setPos(sf::Vector2f(4000, 3200));
+	m_worker[8].setPos(sf::Vector2f(4000, 1200));
+	m_worker[9].setPos(sf::Vector2f(3800, 1400));
+	m_worker[10].setPos(sf::Vector2f(4200, 1400));
+	m_worker[11].setPos(sf::Vector2f(4200, 3000));
+	m_worker[12].setPos(sf::Vector2f(3800, 2800));
+
+//	m_window.setFramerateLimit(144);
+>>>>>>> PathFinding
 }
 
 /// <summary>
@@ -129,6 +144,22 @@ void Game::update(sf::Time deltaTime)
 
 		updateHealthBar();
 
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			m_worker[i].update();
+			m_worker[i].checkWallCollision(m_tileMap);
+			m_worker[i].checkPlayerCollision(m_player->getBody()); //need to get player sprite
+			m_worker[i].checkSweeperCollision(m_sweeper.getBody());
+		}
+
+		m_sweeper.update();
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			if (m_worker[i].getAlive())
+			{
+				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
+			}
+		}
 		break;
 	case GameState::CONTROLS:
 
@@ -183,6 +214,7 @@ void Game::render()
 
 		break;
 	case GameState::GAME:
+<<<<<<< HEAD
 		//game render
 		m_window.setView(m_view);
 
@@ -197,6 +229,14 @@ void Game::render()
 		}
 
 		m_player->render(&m_window, sf::Vector2f(1.0f, 1.0f));
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			if (m_worker[i].getAlive())
+			{
+				m_window.draw(m_worker[i].getBody());
+			}
+		}
+		m_window.draw(m_sweeper.getBody());
 		m_powerup->render(m_window);
 
 		m_window.draw(m_healthBar);

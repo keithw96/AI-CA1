@@ -27,6 +27,8 @@ public:
 
 	void tileCollision(std::vector<Tile>& tilemap, int playerNumber);
 
+	sf::Sprite getBody();
+
 private:
 	void speed();
 	void rotate();
