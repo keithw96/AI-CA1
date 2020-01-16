@@ -340,6 +340,11 @@ void Player::tileCollision(std::vector<Tile> &tilemap, int playerNumber)
 
 }
 
+sf::Sprite Player::getBody()
+{
+	return m_sprite;
+}
+
 /// <summary>
 /// creats a vector of the boundary tiles
 /// </summary>

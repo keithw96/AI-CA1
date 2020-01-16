@@ -134,7 +134,9 @@
     <ClCompile Include="Predator.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
+    <ClCompile Include="Sweeper.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlienNest.h" />
@@ -145,7 +147,9 @@
     <ClInclude Include="Predator.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="SplashScreen.h" />
+    <ClInclude Include="Sweeper.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

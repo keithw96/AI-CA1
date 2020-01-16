@@ -48,6 +48,20 @@ Game::Game() :
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
+
+	m_worker[1].setPos(sf::Vector2f(600, 1200));
+	m_worker[2].setPos(sf::Vector2f(1000, 1300));
+	m_worker[3].setPos(sf::Vector2f(1000, 3200));
+	m_worker[4].setPos(sf::Vector2f(2750, 3300));
+	m_worker[5].setPos(sf::Vector2f(1000, 5000));
+	m_worker[6].setPos(sf::Vector2f(4000, 5200));
+	m_worker[7].setPos(sf::Vector2f(4000, 3200));
+	m_worker[8].setPos(sf::Vector2f(4000, 1200));
+	m_worker[9].setPos(sf::Vector2f(3800, 1400));
+	m_worker[10].setPos(sf::Vector2f(4200, 1400));
+	m_worker[11].setPos(sf::Vector2f(4200, 3000));
+	m_worker[12].setPos(sf::Vector2f(3800, 2800));
+
 //	m_window.setFramerateLimit(144);
 }
 
@@ -130,6 +144,13 @@ void Game::update(sf::Time deltaTime)
 			m_nestArr[i].update(deltaTime, m_player->getPosition());
 		}
 
+
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			m_worker[i].update();
+			m_worker[i].checkWallCollision(m_tileMap);
+			m_worker[i].checkPlayerCollision(m_player->getBody()); //need to get player sprite
+		}
 		break;
 	case GameState::CONTROLS:
 
@@ -186,7 +207,6 @@ void Game::render()
 		break;
 	case GameState::GAME:
 		//
-
 //game render
 		m_window.setView(m_view);
 
@@ -199,7 +219,13 @@ void Game::render()
 		{
 			m_nestArr[i].render(&m_window, sf::Vector2f(1.0, 1.0));
 		}
-
+		for (int i = 0; i < NUM_OF_WORKERS; i++)
+		{
+			if (m_worker[i].getAlive())
+			{
+				m_window.draw(m_worker[i].getBody());
+			}
+		}
 		m_player->render(m_window, sf::Vector2f(1.0f, 1.0f));
 		//
 		m_powerup->render(m_window);
@@ -220,6 +246,8 @@ void Game::render()
 		m_miniPlayer->render(m_window, sf::Vector2f(10.0f, 10.0f));
 		//
 		m_powerup->render(m_window);
+
+		
 		break;
 	case GameState::CONTROLS:
 

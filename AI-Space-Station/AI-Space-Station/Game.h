@@ -17,6 +17,7 @@
 #include "Tile.h"
 #include "AlienNest.h"
 #include "Predator.h"
+#include "Worker.h"
 
 //
 class Splash;
@@ -101,6 +102,7 @@ private:
 
 	std::vector<Tile> m_tileMap;
 	std::vector<AlienNest> m_nestArr;
+	static const int NUM_OF_WORKERS = 15;
 	/*
 	1 = black tile
 	2 = vertical tile
@@ -158,6 +160,7 @@ private:
 	Player * m_player;
 	Player *m_miniPlayer;
 	PowerUp * m_powerup;
+	Worker m_worker[NUM_OF_WORKERS];
 };
 
 #include "SplashScreen.h"
