@@ -6,8 +6,12 @@
 #include "Tile.h"
 #include "AlienNest.h"
 #include "Predator.h"
+#include "MainMenu.h"
+#include "SplashScreen.h"
+#include "LicenseScreen.h"
+#include "Player.h"
+#include "Power-Up.h"
 
-//
 class Splash;
 class License;
 class Player;
@@ -27,7 +31,6 @@ struct VectorComparator
 	}
 };
 
-//
 class Game
 {
 public:
@@ -38,8 +41,8 @@ public:
 	void run();
 
 protected:
-	GameState gameState;
 
+	GameState gameState;
 private:
 	void processEvents();
 	void update(sf::Time deltaTime);
@@ -151,16 +154,13 @@ private:
 	};
 
 	//
-	Predator * m_predator;
-	Splash * m_splash;
-	License * m_license;
-	Player * m_player;
-	Player *m_miniPlayer;
-	PowerUp * m_powerup;
+	Predator* m_predator;
+	Splash* m_splash;
+	License* m_license;
+	Player* m_player;
+	Player* m_miniPlayer;
+	PowerUp* m_powerup;
+	MainMenu* m_mainMenu;
 };
 
-#include "SplashScreen.h"
-#include "LicenseScreen.h"
-#include "Player.h"
-#include "Power-Up.h"
 #endif // !GAME_H
