@@ -373,13 +373,14 @@ void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 					m_position -= m_velocity;
 					m_sprite.setPosition(m_position);
 				}
-sf::Sprite Player::getBody()
-{
-	return m_sprite;
-}
 			}
 		}
 	}
+}
+
+sf::Sprite Player::getBody()
+{
+	return m_sprite;
 }
 
 /// <summary>

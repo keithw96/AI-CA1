@@ -63,7 +63,6 @@ Game::Game():
 	m_worker[12].setPos(sf::Vector2f(3800, 2800));
 
 //	m_window.setFramerateLimit(144);
->>>>>>> PathFinding
 }
 
 /// <summary>
@@ -214,7 +213,6 @@ void Game::render()
 
 		break;
 	case GameState::GAME:
-<<<<<<< HEAD
 		//game render
 		m_window.setView(m_view);
 
