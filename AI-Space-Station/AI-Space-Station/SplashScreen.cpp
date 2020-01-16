@@ -44,7 +44,7 @@ void Splash::init()
 	m_textTwo.setCharacterSize(70);
 	m_textTwo.setPosition(m_positionTwo);
 
-	m_textThree.setString("Martin Farrel - C00157047");
+	m_textThree.setString("Martin Farrell - C00157047");
 	m_textThree.setFont(m_font);
 	m_textThree.setCharacterSize(70);
 	m_textThree.setPosition(m_positionThree);
