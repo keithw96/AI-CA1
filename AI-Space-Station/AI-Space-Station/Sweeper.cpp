@@ -40,10 +40,6 @@ void Sweeper::checkForWorker(sf::Vector2f workerPos)
 		vectorTowardsWorker = vectorTowardsWorker / (sqrt((vectorTowardsWorker.x * vectorTowardsWorker.x) + (vectorTowardsWorker.y * vectorTowardsWorker.y)));
 		m_vel = vectorTowardsWorker * 4.0f;
 	}
-	else
-	{
-		//m_vel = m_direction[0];
-	}
 }
 
 void Sweeper::checkForPlayer(sf::Sprite player)
