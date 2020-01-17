@@ -43,7 +43,7 @@ private:
 	void workerCollision();
 	void projectileCollision();
 	void enemyCollision();
-	void powerupCollision(PowerUp* powerup);
+	void powerupCollision(PowerUp* powerup, int playerNum);
 
 	void loadTextures();
 
@@ -59,12 +59,12 @@ private:
 	sf::Vector2f m_velocity;
 
 	std::vector<Projectile*> m_projectiles;
-
+	std::vector<sf::Vector2f> m_powerupSpawnPoints;
 	float m_speed, m_maxSpeed, m_boostSpeed, m_rotation, m_maxVelocity;
 
-	int m_health, m_animatedColour, m_iColour, m_bColour, m_powerupTime, m_coolDown, m_fireRate;
+	int m_health, m_maxHealth, m_animatedColour, m_iColour, m_bColour, m_powerupTime, m_coolDown, m_fireRate;
 
-	bool m_invincible, m_boosted, m_mapCreated, m_up, m_right, m_down, m_left;
+	bool m_invincible, m_mapCreated, m_up, m_right, m_down, m_left;
 };
 
 #endif // !PLAYER_H

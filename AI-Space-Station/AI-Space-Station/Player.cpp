@@ -36,7 +36,7 @@ void Player::init()
 	m_maxVelocity = 3;
 	m_fireRate = 50;
 	m_coolDown = m_fireRate;
-	m_health = 100;
+	m_health = 80;
 	m_animatedColour = 0;
 
 	m_iColour = 1;
@@ -51,7 +51,6 @@ void Player::init()
 	m_projectileSprite.setTexture(m_projectileTxt);
 
 	m_invincible = false;
-	m_boosted = false;
 	m_mapCreated = false;
 	m_up = false;
 	m_right = false;
@@ -80,11 +79,10 @@ void Player::loadTextures()
 /// <param name="deltaTime"></param>
 void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vector<Tile> boundaryTiles, int playerNumber)
 {
-	m_health--;
 	powerupColourAnimate();
 	powerupTime();
 
-	if (m_invincible == false && m_boosted == false)
+	if (m_invincible == false)
 	{
 		m_animatedColour = 0;
 		m_iColour = 1;
@@ -104,7 +102,7 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	rotate();
 	speed();
 	shoot();
-	powerupCollision(powerup);
+	powerupCollision(powerup, playerNumber);
 
 
 	if (playerNumber == 1)
@@ -115,7 +113,6 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	move();
 	tileCollision(boundaryTiles, playerNumber);
 	updateBullets(deltaTime, boundaryTiles);
-
 }
 
 /// <summary>
@@ -128,79 +125,6 @@ void Player::render(sf::RenderWindow* window, sf::Vector2f scale)
 	window->draw(m_sprite);
 	renderBullets(window, scale);
 }
-
-///// <summary>
-///// increases the players speed if the up key is pressed
-///// </summary>
-//void Player::addVelocity()
-//{
-
-//	if (sf::Keyboard::isKeyPressed(m_keyboard.Up))
-//	{
-//		if (m_boosted == true)
-//		{
-//			speed = m_maxSpeed + m_boostSpeed;
-//		}
-//		else if (m_boosted == false)
-//		{
-//			speed = m_maxSpeed;
-//		}
-//	}
-//
-//	//
-//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Down))
-//	{
-//		if (m_boosted == true)
-//		{
-//			speed = m_maxSpeed + m_boostSpeed;
-//		}
-//		else if (m_boosted == false)
-//		{
-//			speed = m_maxSpeed;
-//		}
-//	}
-//
-//	//
-//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Left))
-//	{
-//		if (m_boosted == true)
-//		{
-//			speed = m_maxSpeed + m_boostSpeed;
-//		}
-//		else if (m_boosted == false)
-//		{
-//			speed = m_maxSpeed;
-//		}
-//
-//		m_up = false;
-//		m_down = false;
-//		m_left = true;
-//		m_right = false;
-
-//		m_angle = 270;
-//		m_position.x -= speed;
-//	}
-//
-//	else if (sf::Keyboard::isKeyPressed(m_keyboard.Right))
-//	{
-//		if (m_boosted == true)
-//		{
-//			speed = m_maxSpeed + m_boostSpeed;
-//		}
-//		else if (m_boosted == false)
-//		{
-//			speed = m_maxSpeed;
-//		}
-//
-//		m_up = false;
-//		m_down = false;
-//		m_left = false;
-//		m_right = true;
-//		m_angle = 90;
-//		m_position.x += speed;
-//	}
-//	m_sprite.setRotation(m_angle);
-//}
 
 /// <summary>
 /// Raises or lowers the players speed via the up down W or S keys
@@ -269,7 +193,6 @@ void Player::shoot()
 			m_projectiles.push_back(projectile);
 			m_coolDown = 0;
 		}
-		
 	}
 	m_coolDown++;
 }
@@ -336,29 +259,24 @@ void Player::enemyCollision()
 /// the power up's active is set to false and the player gets the buff of the power up
 /// </summary>
 /// <param name="powerup"></param>
-void Player::powerupCollision(PowerUp * powerup)
+void Player::powerupCollision(PowerUp * powerup, int playernum)
 {
 	if (powerup->getActive() == true)
 	{
-		if (m_sprite.getGlobalBounds().intersects(powerup->getSprite().getGlobalBounds()))
+		if (m_sprite.getGlobalBounds().intersects(powerup->getSprite().getGlobalBounds()) && playernum == 1)
 		{
 			powerup->setActive(false);
 
 			if (powerup->getType() >= 1 && powerup->getType() <= 10)
 			{
 				m_invincible = true;
-				m_boosted = false;
 				m_iColour = 1; 
 				m_bColour = 1;
 				m_powerupTime = 250;
 			}
 			else if (powerup->getType() >= 11 && powerup->getType() <= 20)
 			{
-				m_invincible = false;
-				m_boosted = true;
-				m_iColour = 1;
-				m_bColour = 1;
-				m_powerupTime = 400;
+				m_health = m_health + 50;
 			}
 		}
 	}
@@ -388,6 +306,10 @@ void Player::tileCollision(std::vector<Tile>& tilemap, int playerNumber)
 	}
 }
 
+/// <summary>
+/// Returns the players Sprite
+/// </summary>
+/// <returns></returns>
 sf::Sprite Player::getBody()
 {
 	return m_sprite;
@@ -398,24 +320,13 @@ sf::Sprite Player::getBody()
 /// </summary>
 void Player::powerupColourAnimate()
 {
-	if (m_invincible == true)
+	if (m_invincible)
 	{
 		m_animatedColour++;
 
 		if (m_animatedColour > 20)
 		{
 			m_iColour *= -1;
-			m_animatedColour = 0;
-		}
-	}
-
-	else if (m_boosted == true)
-	{
-		m_animatedColour++;
-
-		if (m_animatedColour > 20)
-		{
-			m_bColour *= -1;
 			m_animatedColour = 0;
 		}
 	}
@@ -440,15 +351,13 @@ void Player::powerupColourAnimate()
 /// </summary>
 void Player::powerupTime()
 {
-	if (m_invincible == true || m_boosted == true)
+	if (m_invincible)
 	{
 		m_powerupTime--;
-		std::cout << m_powerupTime << std::endl;
 
 		if (m_powerupTime <= 0)
 		{
 			m_invincible = false;
-			m_boosted = false;
 			m_iColour = 1;
 			m_bColour = 1;
 			m_powerupTime = 0;

@@ -14,7 +14,7 @@ public:
 	~PowerUp();
 
 	void update(sf::Time deltaTime);
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window, sf::Vector2f scale);
 
 	int getType();
 
@@ -30,12 +30,15 @@ private:
 	void init();
 	void loadTextures();
 	void respawn();
+	void setPowerUpSpawns();
 
 	sf::Texture m_texture, m_textureTypeOne, m_textureTypeTwo;
 
 	sf::Sprite m_sprite;
 
 	sf::Vector2f m_position;
+
+	std::vector<sf::Vector2f> m_spawnpositions;
 
 	int m_type, m_lifeTime, m_respawnTime;
 	bool m_active;

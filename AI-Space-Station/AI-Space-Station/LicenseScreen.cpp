@@ -24,7 +24,7 @@ void License::init()
 	//
 	loadTextures();
 	//
-	m_position = sf::Vector2f(700, 800);
+	m_position = sf::Vector2f(0, 0);
 	//
 	m_sprite.setTexture(m_texture);
 	m_sprite.setPosition(m_position);

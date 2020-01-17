@@ -22,10 +22,9 @@ PowerUp::~PowerUp()
 void PowerUp::init()
 {
 	loadTextures();
-
-	m_position = sf::Vector2f(350, 350);
-	m_sprite.setOrigin(50, 50);
-
+	setPowerUpSpawns();
+	int random = rand() % 16;
+	m_position = m_spawnpositions[random];
 	m_texture = m_textureTypeOne;
 	m_lifeTime = 700;
 	m_respawnTime = 0;
@@ -45,7 +44,7 @@ void PowerUp::loadTextures()
 	}
 
 	//
-	if (!m_textureTypeTwo.loadFromFile("ASSETS/Textures/Boost.png"))
+	if (!m_textureTypeTwo.loadFromFile("ASSETS/Textures/HealthPack.png"))
 	{
 		std::cout << "Error! Unable to load License.png from game files!" << std::endl;
 	}
@@ -61,7 +60,7 @@ void PowerUp::update(sf::Time deltaTime)
 
 	if (m_active == true)
 	{
-		m_lifeTime--;
+	//	m_lifeTime--;
 	}
 
 	if (m_lifeTime <= 0)
@@ -83,8 +82,8 @@ void PowerUp::respawn()
 	if (m_respawnTime >= 40 && m_active == false)
 	{
 
-		m_position.x = rand() % 700 + 10;
-		m_position.y = rand() % 700 + 10;
+		int random = rand() % 16;
+		m_position = m_spawnpositions[random];
 		m_type = rand() % 20 + 1;
 		
 
@@ -111,8 +110,9 @@ void PowerUp::respawn()
 /// renders the powerup if it is active
 /// </summary>
 /// <param name="window"></param>
-void PowerUp::render(sf::RenderWindow& window)
+void PowerUp::render(sf::RenderWindow& window, sf::Vector2f scale)
 {
+	m_sprite.setScale(scale);
 	if (m_active == true)
 	{
 		window.draw(m_sprite);
@@ -171,4 +171,24 @@ void PowerUp::setPosition(sf::Vector2f position)
 sf::Vector2f PowerUp::getPosition()
 {
 	return m_position;
+}
+
+void PowerUp::setPowerUpSpawns()
+{
+	m_spawnpositions.push_back(sf::Vector2f(750, 3300));
+	m_spawnpositions.push_back(sf::Vector2f(750, 3635));
+	m_spawnpositions.push_back(sf::Vector2f(1335, 3300));
+	m_spawnpositions.push_back(sf::Vector2f(1335, 3635));
+	m_spawnpositions.push_back(sf::Vector2f(2410, 5475));
+	m_spawnpositions.push_back(sf::Vector2f(2410, 4918));
+	m_spawnpositions.push_back(sf::Vector2f(3047, 5475));
+	m_spawnpositions.push_back(sf::Vector2f(3047, 4918));
+	m_spawnpositions.push_back(sf::Vector2f(3805, 3816));
+	m_spawnpositions.push_back(sf::Vector2f(3805, 3282));
+	m_spawnpositions.push_back(sf::Vector2f(4735, 3816));
+	m_spawnpositions.push_back(sf::Vector2f(4735, 3282));
+	m_spawnpositions.push_back(sf::Vector2f(560, 1283));
+	m_spawnpositions.push_back(sf::Vector2f(560, 1814));
+	m_spawnpositions.push_back(sf::Vector2f(1517, 1283));
+	m_spawnpositions.push_back(sf::Vector2f(1517, 1814));
 }

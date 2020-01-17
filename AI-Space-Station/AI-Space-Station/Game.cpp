@@ -6,7 +6,7 @@
 Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
-	gameState{GameState::SPLASH}
+	gameState{GameState::GAME}
 {
 	m_menuView = m_window.getView();
 
@@ -65,8 +65,6 @@ Game::Game():
 	m_worker[10].setPos(sf::Vector2f(4200, 1400));
 	m_worker[11].setPos(sf::Vector2f(4200, 3000));
 	m_worker[12].setPos(sf::Vector2f(3800, 2800));
-
-//	m_window.setFramerateLimit(144);
 }
 
 /// <summary>
@@ -144,8 +142,6 @@ void Game::update(sf::Time deltaTime)
 		{
 			m_nestArr[i].update(deltaTime, m_player->getPosition(), m_boundaryTiles);
 		}
-
-		std::cout << m_window.getSize().x << std::endl;
 
 		m_healthBar.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
 		m_healthBar.setSize(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
@@ -249,7 +245,7 @@ void Game::render()
 			}
 		}
 		m_window.draw(m_sweeper.getBody());
-		m_powerup->render(m_window);
+		m_powerup->render(m_window, sf::Vector2f(1.0f, 1.0f));
 
 		m_window.draw(m_healthBar);
 		m_window.draw(m_healthBarBorder);
@@ -268,7 +264,7 @@ void Game::render()
 		}
 
 		m_miniPlayer->render(&m_window, sf::Vector2f(10.0f, 10.0f));
-		m_powerup->render(m_window);
+		m_powerup->render(m_window, sf::Vector2f(5.0f, 5.0f));
 		break;
 	case GameState::GAMEOVER:
 		m_window.setView(m_menuView);
@@ -395,9 +391,4 @@ void Game::updateHealthBar()
 	{
 		m_healthBar.setFillColor(sf::Color::Red);
 	}
-}
-
-void Game::resetGame()
-{
-	m_player->init();
 }
