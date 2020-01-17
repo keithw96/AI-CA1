@@ -34,15 +34,47 @@ void Sweeper::checkForWorker(sf::Vector2f workerPos)
 {
 	float dist = sqrt(((workerPos.x - m_pos.x) * (workerPos.x - m_pos.x)) + ((workerPos.y - m_pos.y) * (workerPos.y - m_pos.y)));
 
-	if (dist < 200)
+	if (dist < 300 && !flee)
 	{
 		sf::Vector2f vectorTowardsWorker = workerPos - m_pos;
 		vectorTowardsWorker = vectorTowardsWorker / (sqrt((vectorTowardsWorker.x * vectorTowardsWorker.x) + (vectorTowardsWorker.y * vectorTowardsWorker.y)));
-		m_vel = vectorTowardsWorker;
+		m_vel = vectorTowardsWorker * 4.0f;
 	}
 	else
 	{
 		//m_vel = m_direction[0];
+	}
+}
+
+void Sweeper::checkForPlayer(sf::Sprite player)
+{
+	float dist = sqrt(((player.getPosition().x - m_pos.x) * (player.getPosition().x - m_pos.x)) + ((player.getPosition().y - m_pos.y) * (player.getPosition().y - m_pos.y)));
+
+	if (dist < 200)
+	{
+		sf::Vector2f vecTowardsPlayer = player.getPosition() - m_pos;
+		vecTowardsPlayer = vecTowardsPlayer / (sqrt((vecTowardsPlayer.x * vecTowardsPlayer.x) + (vecTowardsPlayer.y * vecTowardsPlayer.y)));
+		m_vel = vecTowardsPlayer * -4.0f;
+		flee = true;
+	}
+	else if ( dist > 300)
+	{
+		flee = false;
+	}
+}
+
+void Sweeper::checkForWall(std::vector<Tile>& tilemap)
+{
+	for (int i = 0; i < tilemap.size(); i++)
+	{
+		if (tilemap[i].getType() == 1)
+		{
+			//
+			if (m_body.getGlobalBounds().intersects(tilemap[i].getSprite().getGlobalBounds()))
+			{
+				m_vel *= -1.0f;
+			}
+		}
 	}
 }
 

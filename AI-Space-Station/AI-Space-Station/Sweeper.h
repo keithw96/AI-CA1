@@ -1,5 +1,6 @@
 #pragma once
 #include"SFML/Graphics.hpp"
+#include"Tile.h"
 class Sweeper
 {
 public:
@@ -7,6 +8,8 @@ public:
 	~Sweeper();
 	sf::RectangleShape getBody();
 	void checkForWorker(sf::Vector2f workerPos);
+	void checkForPlayer(sf::Sprite player);
+	void checkForWall(std::vector<Tile>& tilemap);
 	void move();
 	void update();
 
@@ -19,4 +22,5 @@ private:
 	float speed = 1.0f;
 	sf::Vector2f m_vel;
 	sf::Vector2f m_pos;
+	bool flee = false;
 };
