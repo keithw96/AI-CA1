@@ -165,19 +165,13 @@ void Game::update(sf::Time deltaTime)
 				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
 			}
 		}
-<<<<<<< HEAD
 
 		if (m_player->getHealth() <= 0)
 		{
 			gameState = GameState::GAMEOVER;
 		}
-=======
 		m_sweeper.checkForPlayer(m_player->getBody());
 		m_sweeper.checkForWall(m_tileMap);
-		break;
-	case GameState::CONTROLS:
->>>>>>> Sweeper
-
 		break;
 	case GameState::GAMEOVER:
 		m_gameOverScreen->update(deltaTime, m_window);

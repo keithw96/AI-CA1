@@ -23,4 +23,5 @@ private:
 	sf::Vector2f m_vel;
 	sf::Vector2f m_pos;
 	bool flee = false;
+	int numOfWorkers = 0;
 };
