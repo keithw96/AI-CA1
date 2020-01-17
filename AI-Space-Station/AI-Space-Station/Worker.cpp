@@ -63,6 +63,7 @@ void Worker::checkWallCollision(std::vector<Tile>& tilemap)
 			//
 			if (m_body.getGlobalBounds().intersects(tilemap[i].getSprite().getGlobalBounds()))
 			{
+				m_pos -= m_vel;
 				setVel();
 			}
 		}

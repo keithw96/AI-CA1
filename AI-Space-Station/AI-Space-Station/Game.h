@@ -161,7 +161,7 @@ private:
 
 
 	Worker m_worker[NUM_OF_WORKERS];
-	Sweeper m_sweeper;
+	Sweeper m_sweeper[4];
 	Predator* m_predator;
 	Splash* m_splash;
 	License* m_license;

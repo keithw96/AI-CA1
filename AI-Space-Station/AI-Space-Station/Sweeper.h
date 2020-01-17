@@ -12,6 +12,7 @@ public:
 	void checkForWall(std::vector<Tile>& tilemap);
 	void move();
 	void update();
+	void setPos(sf::Vector2f newPos);
 
 private:
 	sf::RectangleShape m_body;

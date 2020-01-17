@@ -1,4 +1,5 @@
 #include "Game.h"
+#include<iostream>
 
 /// <summary>
 /// constructor
@@ -6,7 +7,7 @@
 Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
-	gameState{GameState::YOUWIN}
+	gameState{GameState::GAME}
 {
 	m_menuView = m_window.getView();
 
@@ -65,7 +66,12 @@ Game::Game():
 	m_worker[9].setPos(sf::Vector2f(3800, 1400));
 	m_worker[10].setPos(sf::Vector2f(4200, 1400));
 	m_worker[11].setPos(sf::Vector2f(4200, 3000));
-	m_worker[12].setPos(sf::Vector2f(3800, 2800));
+	m_worker[12].setPos(sf::Vector2f(4200, 3000));
+
+	m_sweeper[0].setPos(sf::Vector2f(4200, 3000));
+	m_sweeper[1].setPos(sf::Vector2f(4200, 1000));
+	m_sweeper[2].setPos(sf::Vector2f(600, 1200));
+	m_sweeper[3].setPos(sf::Vector2f(1000, 5000));
 }
 
 /// <summary>
@@ -155,15 +161,24 @@ void Game::update(sf::Time deltaTime)
 			m_worker[i].update();
 			m_worker[i].checkWallCollision(m_tileMap);
 			m_worker[i].checkPlayerCollision(m_player->getBody()); //need to get player sprite
-			m_worker[i].checkSweeperCollision(m_sweeper.getBody());
+			for (int i = 0; i < 4; i++)
+			{
+				m_worker[i].checkSweeperCollision(m_sweeper[i].getBody());
+			}
 		}
 
-		m_sweeper.update();
+		for (int i = 0; i < 4; i++)
+		{
+			m_sweeper[i].update();
+		}
 		for (int i = 0; i < NUM_OF_WORKERS; i++)
 		{
 			if (m_worker[i].getAlive())
 			{
-				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
+				for (int i = 0; i < 4; i++)
+				{
+					m_sweeper[i].checkForWorker(m_worker[i].getBody().getPosition());
+				}
 			}
 		}
 
@@ -177,9 +192,13 @@ void Game::update(sf::Time deltaTime)
 			gameState = GameState::YOUWIN;
 		}
 
-		m_sweeper.checkForPlayer(m_player->getBody());
-		m_sweeper.checkForWall(m_tileMap);
+		for (int i = 0; i < 4; i++)
+		{
+			m_sweeper[i].checkForPlayer(m_player->getBody());
+			m_sweeper[i].checkForWall(m_tileMap);
+		}
 
+		std::cout << m_player->getPosition().x << " " << m_player->getPosition().y << std::endl;
 		break;
 	case GameState::GAMEOVER:
 		m_gameOverScreen->update(deltaTime, m_window);
@@ -257,8 +276,11 @@ void Game::render()
 				m_window.draw(m_worker[i].getBody());
 			}
 		}
-		m_window.draw(m_sweeper.getBody());
-		m_powerup->render(m_window, sf::Vector2f(1.0f, 1.0f));
+		for (int i = 0; i < 4; i++)
+		{
+			m_window.draw(m_sweeper[i].getBody());
+			m_powerup->render(m_window, sf::Vector2f(1.0f, 1.0f));
+		}
 
 		m_window.draw(m_healthBar);
 		m_window.draw(m_healthBarBorder);

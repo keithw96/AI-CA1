@@ -84,3 +84,8 @@ void Sweeper::update()
 {
 	move();
 }
+
+void Sweeper::setPos(sf::Vector2f newPos)
+{
+	m_pos = newPos;
+}
