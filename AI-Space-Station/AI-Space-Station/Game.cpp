@@ -159,6 +159,8 @@ void Game::update(sf::Time deltaTime)
 				m_sweeper.checkForWorker(m_worker[i].getBody().getPosition());
 			}
 		}
+		m_sweeper.checkForPlayer(m_player->getBody());
+		m_sweeper.checkForWall(m_tileMap);
 		break;
 	case GameState::CONTROLS:
 
