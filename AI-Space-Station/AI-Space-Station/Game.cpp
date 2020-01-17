@@ -7,7 +7,7 @@
 Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
-	gameState{GameState::GAME}
+	gameState{GameState::SPLASH}
 {
 	m_menuView = m_window.getView();
 
@@ -150,10 +150,6 @@ void Game::update(sf::Time deltaTime)
 			m_nestArr[i].update(deltaTime, m_player->getPosition(), m_boundaryTiles);
 		}
 
-		m_healthBar.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
-		m_healthBar.setSize(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
-		m_healthBarBorder.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
-
 		updateHealthBar();
 
 		for (int i = 0; i < NUM_OF_WORKERS; i++)
@@ -279,8 +275,9 @@ void Game::render()
 		for (int i = 0; i < 4; i++)
 		{
 			m_window.draw(m_sweeper[i].getBody());
-			m_powerup->render(m_window, sf::Vector2f(1.0f, 1.0f));
 		}
+
+		m_powerup->render(m_window, sf::Vector2f(1.0f, 1.0f));
 
 		m_window.draw(m_healthBar);
 		m_window.draw(m_healthBarBorder);
@@ -293,13 +290,13 @@ void Game::render()
 			m_tileMap[i].draw(&m_window);
 		}
 
-		/*for (int i = 0; i < m_nestArr.size(); i++)
+		for (int i = 0; i < m_nestArr.size(); i++)
 		{
 			m_nestArr[i].render(&m_window, sf::Vector2f(2.0, 2.0));
-		}*/
+		}
 
 		m_miniPlayer->render(&m_window, sf::Vector2f(10.0f, 10.0f));
-		m_powerup->render(m_window, sf::Vector2f(5.0f, 5.0f));
+		m_powerup->render(m_window, sf::Vector2f(3.0f, 3.0f));
 		break;
 	case GameState::GAMEOVER:
 		m_window.setView(m_menuView);
@@ -429,4 +426,13 @@ void Game::updateHealthBar()
 	{
 		m_healthBar.setFillColor(sf::Color::Red);
 	}
+
+	if (m_player->getHealth() > 66)
+	{
+		m_healthBar.setFillColor(sf::Color::Green);
+	}
+
+	m_healthBar.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
+	m_healthBar.setSize(sf::Vector2f(m_healthBarWidth * ((float)m_player->getHealth() / 100.0f), m_healthBarHeight));
+	m_healthBarBorder.setPosition(m_view.getCenter().x - (m_view.getSize().x / 2) + 50, m_view.getCenter().y - (m_view.getSize().y / 2) + m_healthBarHeight);
 }

@@ -36,7 +36,7 @@ void Player::init()
 	m_maxVelocity = 3;
 	m_fireRate = 50;
 	m_coolDown = m_fireRate;
-	m_health = 80;
+	m_health = 10;
 	m_animatedColour = 0;
 	m_workerCount = 0;
 	m_iColour = 1;
