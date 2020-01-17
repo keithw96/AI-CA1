@@ -139,6 +139,7 @@
     <ClCompile Include="Sweeper.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Worker.cpp" />
+    <ClCompile Include="YouWinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlienNest.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Sweeper.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Worker.h" />
+    <ClInclude Include="YouWinScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

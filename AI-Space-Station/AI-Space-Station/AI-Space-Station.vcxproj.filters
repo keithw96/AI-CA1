@@ -15,6 +15,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Worker.cpp" />
     <ClCompile Include="GameOverScreen.cpp" />
+    <ClCompile Include="YouWinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlienNest.h" />
@@ -30,5 +31,6 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Worker.h" />
     <ClInclude Include="GameOverScreen.h" />
+    <ClInclude Include="YouWinScreen.h" />
   </ItemGroup>
 </Project>

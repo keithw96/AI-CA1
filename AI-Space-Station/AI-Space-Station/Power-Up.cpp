@@ -37,13 +37,11 @@ void PowerUp::init()
 /// </summary>
 void PowerUp::loadTextures()
 {
-	//
 	if (!m_textureTypeOne.loadFromFile("ASSETS/Textures/Invincibility.png"))
 	{
 		std::cout << "Error! Unable to load License.png from game files!" << std::endl;
 	}
 
-	//
 	if (!m_textureTypeTwo.loadFromFile("ASSETS/Textures/HealthPack.png"))
 	{
 		std::cout << "Error! Unable to load License.png from game files!" << std::endl;
@@ -60,7 +58,7 @@ void PowerUp::update(sf::Time deltaTime)
 
 	if (m_active == true)
 	{
-	//	m_lifeTime--;
+		m_lifeTime--;
 	}
 
 	if (m_lifeTime <= 0)

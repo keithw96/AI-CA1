@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Power-Up.h"
 #include "GameOverScreen.h"
+#include "YouWinScreen.h"
 
 class Splash;
 class License;
@@ -23,7 +24,7 @@ class AlienNest;
 
 enum class GameState
 {
-	SPLASH, LICENSE, MENU, GAME, GAMEOVER
+	SPLASH, LICENSE, MENU, GAME, GAMEOVER, YOUWIN
 };
 
 struct VectorComparator
@@ -169,6 +170,7 @@ private:
 	PowerUp* m_powerup;
 	MainMenu* m_mainMenu;
 	GameOverScreen* m_gameOverScreen;
+	YouWinScreen* m_youWinScreen;
 };
 
 #endif // !GAME_H

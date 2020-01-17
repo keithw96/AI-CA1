@@ -23,6 +23,7 @@ public:
 
 	void init();
 	int getHealth();
+	int getWorkerCount();
 	sf::Vector2f getPosition();
 	void setPosition(sf::Vector2f position);
 
@@ -62,7 +63,7 @@ private:
 	std::vector<sf::Vector2f> m_powerupSpawnPoints;
 	float m_speed, m_maxSpeed, m_boostSpeed, m_rotation, m_maxVelocity;
 
-	int m_health, m_maxHealth, m_animatedColour, m_iColour, m_bColour, m_powerupTime, m_coolDown, m_fireRate;
+	int m_health, m_maxHealth, m_animatedColour, m_iColour, m_bColour, m_powerupTime, m_coolDown, m_fireRate, m_workerCount;
 
 	bool m_invincible, m_mapCreated, m_up, m_right, m_down, m_left;
 };

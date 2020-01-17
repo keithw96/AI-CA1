@@ -38,7 +38,7 @@ void Player::init()
 	m_coolDown = m_fireRate;
 	m_health = 80;
 	m_animatedColour = 0;
-
+	m_workerCount = 0;
 	m_iColour = 1;
 	m_bColour = 1;
 
@@ -102,9 +102,7 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 	rotate();
 	speed();
 	shoot();
-	powerupCollision(powerup, playerNumber);
-
-
+	
 	if (playerNumber == 1)
 	{
 		v.setCenter(m_sprite.getPosition());
@@ -112,6 +110,7 @@ void Player::update(sf::Time deltaTime, sf::View& v, PowerUp* powerup, std::vect
 
 	move();
 	tileCollision(boundaryTiles, playerNumber);
+	powerupCollision(powerup, playerNumber);
 	updateBullets(deltaTime, boundaryTiles);
 }
 
@@ -261,22 +260,25 @@ void Player::enemyCollision()
 /// <param name="powerup"></param>
 void Player::powerupCollision(PowerUp * powerup, int playernum)
 {
-	if (powerup->getActive() == true)
+	if (playernum == 1)
 	{
-		if (m_sprite.getGlobalBounds().intersects(powerup->getSprite().getGlobalBounds()) && playernum == 1)
+		if (powerup->getActive() == true)
 		{
-			powerup->setActive(false);
+			if (m_sprite.getGlobalBounds().intersects(powerup->getSprite().getGlobalBounds()))
+			{
+				powerup->setActive(false);
 
-			if (powerup->getType() >= 1 && powerup->getType() <= 10)
-			{
-				m_invincible = true;
-				m_iColour = 1; 
-				m_bColour = 1;
-				m_powerupTime = 250;
-			}
-			else if (powerup->getType() >= 11 && powerup->getType() <= 20)
-			{
-				m_health = m_health + 50;
+				if (powerup->getType() >= 1 && powerup->getType() <= 10)
+				{
+					m_invincible = true;
+					m_iColour = 1;
+					m_bColour = 1;
+					m_powerupTime = 250;
+				}
+				else if (powerup->getType() >= 11 && powerup->getType() <= 20)
+				{
+					m_health = m_health + 50;
+				}
 			}
 		}
 	}
@@ -384,8 +386,20 @@ void Player::setPosition(sf::Vector2f position)
 	m_sprite.setPosition(m_position);
 }
 
-
+/// <summary>
+/// returns the players current health
+/// </summary>
+/// <returns></returns>
 int Player::getHealth()
 {
 	return m_health;
+}
+
+/// <summary>
+/// Returns the players current number of rescued workers
+/// </summary>
+/// <returns></returns>
+int Player::getWorkerCount()
+{
+	return m_workerCount;
 }

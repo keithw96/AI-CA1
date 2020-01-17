@@ -6,7 +6,7 @@
 Game::Game():
 	m_window{ sf::VideoMode{3840, 2160, 32}, "AI Space Station"},
 	is_running{ true },
-	gameState{GameState::GAME}
+	gameState{GameState::YOUWIN}
 {
 	m_menuView = m_window.getView();
 
@@ -38,6 +38,7 @@ Game::Game():
 	m_license = new License();
 	m_mainMenu = new MainMenu();
 	m_gameOverScreen = new GameOverScreen();
+	m_youWinScreen = new YouWinScreen();
 	m_player = new Player();
 	m_miniPlayer = new Player();
 	m_powerup = new PowerUp();
@@ -170,11 +171,21 @@ void Game::update(sf::Time deltaTime)
 		{
 			gameState = GameState::GAMEOVER;
 		}
+
+		if (m_player->getWorkerCount() == 12)
+		{
+			gameState = GameState::YOUWIN;
+		}
+
 		m_sweeper.checkForPlayer(m_player->getBody());
 		m_sweeper.checkForWall(m_tileMap);
 		break;
 	case GameState::GAMEOVER:
 		m_gameOverScreen->update(deltaTime, m_window);
+		break;
+
+	case GameState::YOUWIN:
+		m_youWinScreen->update(deltaTime, m_window);
 		break;
 	}
 
@@ -271,6 +282,9 @@ void Game::render()
 		m_window.setView(m_menuView);
 		m_gameOverScreen->render(m_window);
 		break;
+	case GameState::YOUWIN:
+		m_window.setView(m_menuView);
+		m_youWinScreen->render(m_window);
 	}
 	m_window.display();
 }
