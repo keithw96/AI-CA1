@@ -1,4 +1,5 @@
 #include "Predator.h"
+#include<iostream>
 
 /// <summary>
 /// constructor
@@ -11,7 +12,6 @@ Predator::Predator(sf::Vector2f pos, sf::Sprite sprite, sf::Vector2f roomCenter)
 	m_startPos = pos;
 	m_position = pos;
 	m_sprite = sprite;
-	m_velocity = 3;
 	m_roomCenter = roomCenter;
 	m_rotation = 0;
 	m_sprite.setPosition(m_position);
@@ -23,57 +23,31 @@ Predator::Predator(sf::Vector2f pos, sf::Sprite sprite, sf::Vector2f roomCenter)
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="playerPos"></param>
-void Predator::update(sf::Time deltaTime, sf::Vector2f playerPos)
+void Predator::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<Tile>& tilemap)
 {
-	if (m_roomCenter.x - playerPos.x < 400 && m_roomCenter.x - playerPos.x > -400 && m_roomCenter.y - playerPos.y < 400 && m_roomCenter.y - playerPos.y > -400)
+	
+	sf::Vector2f vectorTowardsPlayer = playerPos - m_position;
+	vectorTowardsPlayer = vectorTowardsPlayer / (sqrt((vectorTowardsPlayer.x * vectorTowardsPlayer.x) + (vectorTowardsPlayer.y * vectorTowardsPlayer.y)));;
+	m_velocity = vectorTowardsPlayer * 6.0f;
+	if (moving)
 	{
-		if (m_position.x < playerPos.x)
-		{
-			m_position.x += m_velocity;
-		}
-
-		if (m_position.x > playerPos.x)
-		{
-			m_position.x -= m_velocity; 
-		}
-
-		if (m_position.y > playerPos.y)
-		{
-			m_position.y -= m_velocity;
-		}
-
-		if (m_position.y < playerPos.y)
-		{
-			m_position.y += m_velocity;
-		}
-	}
-
-	else
-	{
-		if (m_position.x < m_startPos.x)
-		{
-			m_position.x += m_velocity;
-		}
-
-		if (m_position.x > m_startPos.x)
-		{
-			m_position.x -= m_velocity;
-		}
-
-		if (m_position.y > m_startPos.y)
-		{
-			m_position.y -= m_velocity;
-		}
-
-		if (m_position.y < m_startPos.y)
-		{
-			m_position.y += m_velocity;
-		}
+		m_position += m_velocity;
 	}
 	m_rotation += 5;
 	m_sprite.setRotation(m_rotation);
-
 	m_sprite.setPosition(m_position);
+
+	for (int i = 0; i < tilemap.size(); i++)
+	{
+		if (tilemap[i].getType() == 1)
+		{
+			//
+			if (m_sprite.getGlobalBounds().intersects(tilemap[i].getSprite().getGlobalBounds()))
+			{
+				m_position -= m_velocity;
+			}
+		}
+	}
 }
 
 /// <summary>

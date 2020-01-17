@@ -43,7 +43,7 @@ void AlienNest::update(sf::Time deltaTime, sf::Vector2f playerPos, std::vector<T
 
 	for (auto& pred : m_predators)
 	{
-		pred->update(deltaTime, playerPos);
+		pred->update(deltaTime, playerPos, boundaryTiles);
 	}
 }
 

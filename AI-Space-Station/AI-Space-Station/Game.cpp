@@ -179,6 +179,7 @@ void Game::update(sf::Time deltaTime)
 
 		m_sweeper.checkForPlayer(m_player->getBody());
 		m_sweeper.checkForWall(m_tileMap);
+
 		break;
 	case GameState::GAMEOVER:
 		m_gameOverScreen->update(deltaTime, m_window);
@@ -270,10 +271,10 @@ void Game::render()
 			m_tileMap[i].draw(&m_window);
 		}
 
-		for (int i = 0; i < m_nestArr.size(); i++)
+		/*for (int i = 0; i < m_nestArr.size(); i++)
 		{
 			m_nestArr[i].render(&m_window, sf::Vector2f(2.0, 2.0));
-		}
+		}*/
 
 		m_miniPlayer->render(&m_window, sf::Vector2f(10.0f, 10.0f));
 		m_powerup->render(m_window, sf::Vector2f(5.0f, 5.0f));
