@@ -1,0 +1,126 @@
+\hypertarget{class_alien_nest}{}\doxysection{Alien\+Nest Class Reference}
+\label{class_alien_nest}\index{AlienNest@{AlienNest}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_alien_nest_a3fceb8acfa1b18fdcd3f2dff0d4b41ed}{Alien\+Nest}} (sf\+::\+Vector2f pos, sf\+::\+Sprite sprite, sf\+::\+Sprite projectile\+Sprite, sf\+::\+Sprite predator\+Sprite)
+\begin{DoxyCompactList}\small\item\em alien nest constructor takes in a starting position, sprite, sprite for its projectiles and a sprite for its predators \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_alien_nest_af5cab1d9f41226f5a4c1508b31247f9e}{render}} (sf\+::\+Render\+Window $\ast$window, sf\+::\+Vector2f scale)
+\begin{DoxyCompactList}\small\item\em Renders the nest and its predators and projectiles \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_alien_nest_a8ebeeb4d35333a6d7620641012487dc7}{update}} (sf\+::\+Time delta\+Time, sf\+::\+Vector2f player\+Pos, std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$ boundary\+Tiles)
+\begin{DoxyCompactList}\small\item\em Alien Nest Update\+: updates the nests variables and the variables of its projectiles and predators \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_alien_nest_a38bf2bab75a75f416fee1be021d5c179}\label{class_alien_nest_a38bf2bab75a75f416fee1be021d5c179}} 
+void {\bfseries init} (sf\+::\+Vector2f pos, sf\+::\+Sprite sprite, sf\+::\+Sprite projectile\+Sprite, sf\+::\+Sprite predator\+Sprite)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_predator}{Predator}} $\ast$ $>$ \mbox{\hyperlink{class_alien_nest_a7db2e625e9034142e28888d2fe67dd92}{get\+Predators}} ()
+\begin{DoxyCompactList}\small\item\em Returns the array of predators that are children of the nest \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_projectile}{Projectile}} $\ast$ $>$ \mbox{\hyperlink{class_alien_nest_a33574590688d2bc34decdf5576d8d279}{get\+Projectiles}} ()
+\begin{DoxyCompactList}\small\item\em returns the array of projectiles that are childeren of the nest \end{DoxyCompactList}\item 
+sf\+::\+Sprite \mbox{\hyperlink{class_alien_nest_ab37d12dc080c9433d0b34324160c4540}{get\+Sprite}} ()
+\begin{DoxyCompactList}\small\item\em Returns the nests sprite \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_alien_nest_a3fceb8acfa1b18fdcd3f2dff0d4b41ed}\label{class_alien_nest_a3fceb8acfa1b18fdcd3f2dff0d4b41ed}} 
+\index{AlienNest@{AlienNest}!AlienNest@{AlienNest}}
+\index{AlienNest@{AlienNest}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{AlienNest()}{AlienNest()}}
+{\footnotesize\ttfamily Alien\+Nest\+::\+Alien\+Nest (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f}]{pos,  }\item[{sf\+::\+Sprite}]{sprite,  }\item[{sf\+::\+Sprite}]{projectile\+Sprite,  }\item[{sf\+::\+Sprite}]{predator\+Sprite }\end{DoxyParamCaption})}
+
+
+
+alien nest constructor takes in a starting position, sprite, sprite for its projectiles and a sprite for its predators 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em sprite} & \\
+\hline
+{\em projectile\+Sprite} & \\
+\hline
+{\em predator\+Sprite} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_alien_nest_a7db2e625e9034142e28888d2fe67dd92}\label{class_alien_nest_a7db2e625e9034142e28888d2fe67dd92}} 
+\index{AlienNest@{AlienNest}!getPredators@{getPredators}}
+\index{getPredators@{getPredators}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{getPredators()}{getPredators()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_predator}{Predator}} $\ast$ $>$ Alien\+Nest\+::get\+Predators (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the array of predators that are children of the nest 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_alien_nest_a33574590688d2bc34decdf5576d8d279}\label{class_alien_nest_a33574590688d2bc34decdf5576d8d279}} 
+\index{AlienNest@{AlienNest}!getProjectiles@{getProjectiles}}
+\index{getProjectiles@{getProjectiles}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{getProjectiles()}{getProjectiles()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_projectile}{Projectile}} $\ast$ $>$ Alien\+Nest\+::get\+Projectiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns the array of projectiles that are childeren of the nest 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_alien_nest_ab37d12dc080c9433d0b34324160c4540}\label{class_alien_nest_ab37d12dc080c9433d0b34324160c4540}} 
+\index{AlienNest@{AlienNest}!getSprite@{getSprite}}
+\index{getSprite@{getSprite}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{getSprite()}{getSprite()}}
+{\footnotesize\ttfamily sf\+::\+Sprite Alien\+Nest\+::get\+Sprite (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the nests sprite 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_alien_nest_af5cab1d9f41226f5a4c1508b31247f9e}\label{class_alien_nest_af5cab1d9f41226f5a4c1508b31247f9e}} 
+\index{AlienNest@{AlienNest}!render@{render}}
+\index{render@{render}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Alien\+Nest\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window $\ast$}]{window,  }\item[{sf\+::\+Vector2f}]{scale }\end{DoxyParamCaption})}
+
+
+
+Renders the nest and its predators and projectiles 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & \\
+\hline
+{\em scale} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_alien_nest_a8ebeeb4d35333a6d7620641012487dc7}\label{class_alien_nest_a8ebeeb4d35333a6d7620641012487dc7}} 
+\index{AlienNest@{AlienNest}!update@{update}}
+\index{update@{update}!AlienNest@{AlienNest}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Alien\+Nest\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time}]{delta\+Time,  }\item[{sf\+::\+Vector2f}]{player\+Pos,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$}]{boundary\+Tiles }\end{DoxyParamCaption})}
+
+
+
+Alien Nest Update\+: updates the nests variables and the variables of its projectiles and predators 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Time} & \\
+\hline
+{\em player\+Pos} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+A\+I-\/\+Space-\/\+Station/Alien\+Nest.\+h\item 
+A\+I-\/\+Space-\/\+Station/Alien\+Nest.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,175 @@
+\hypertarget{class_projectile}{}\doxysection{Projectile Class Reference}
+\label{class_projectile}\index{Projectile@{Projectile}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_projectile_adc0083580f09215b6b2fb401b32fff99}{Projectile}} (sf\+::\+Vector2f position, sf\+::\+Sprite sprite, bool \mbox{\hyperlink{class_projectile_ab466ece546b1bc6a68a981b06648dbb8}{homing}})
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_projectile_a382867a3faa58ca07f3f025048e895f9}{Projectile}} (sf\+::\+Vector2f position, sf\+::\+Sprite sprite, float rotation, bool \mbox{\hyperlink{class_projectile_ab466ece546b1bc6a68a981b06648dbb8}{homing}})
+\begin{DoxyCompactList}\small\item\em Second constructor for bullets fired by the player \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_projectile_a94903e021fa2edab60ba3836ca0b937d}{$\sim$\+Projectile}} ()
+\begin{DoxyCompactList}\small\item\em deconstructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_af105d4defb7561f4f2f8c5e1b856b688}{update}} (sf\+::\+Time delta\+Time, sf\+::\+Vector2f player\+Pos, std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$ boundary\+Tiles)
+\begin{DoxyCompactList}\small\item\em updates the portjectile depending on what type of projectile it is \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_ac1fc6ec57aa00049e7b5318645ebc78f}{render}} (sf\+::\+Render\+Window $\ast$window, sf\+::\+Vector2f scale)
+\begin{DoxyCompactList}\small\item\em renders the projectile if it is alive \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_ab466ece546b1bc6a68a981b06648dbb8}{homing}} (sf\+::\+Vector2f player\+Pos)
+\begin{DoxyCompactList}\small\item\em homes the projectile in on the players current position \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_adedbcf8400ebc822a87aab813593ef58}{not\+Homing}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_player}{Player}} fired bullet \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_ab0f65ddca638389a1520506e0c26b103}{rotate}} ()
+\begin{DoxyCompactList}\small\item\em Rotates the projectile \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projectile_a38b3d3cb16c15e89a271ec6e1b2b8581}{boundary\+Collision}} (std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$ boundary\+Tiles)
+\begin{DoxyCompactList}\small\item\em Detects if the bullet sprite intersects the boundary tiles sets the alive boolean to false \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_projectile_a46d45818ef75e180220d57daa4a865b5}\label{class_projectile_a46d45818ef75e180220d57daa4a865b5}} 
+bool {\bfseries m\+\_\+alive}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_projectile_adc0083580f09215b6b2fb401b32fff99}\label{class_projectile_adc0083580f09215b6b2fb401b32fff99}} 
+\index{Projectile@{Projectile}!Projectile@{Projectile}}
+\index{Projectile@{Projectile}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{Projectile()}{Projectile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Projectile\+::\+Projectile (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f}]{pos,  }\item[{sf\+::\+Sprite}]{sprite,  }\item[{bool}]{homing }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em sprite} & \\
+\hline
+{\em homing} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projectile_a382867a3faa58ca07f3f025048e895f9}\label{class_projectile_a382867a3faa58ca07f3f025048e895f9}} 
+\index{Projectile@{Projectile}!Projectile@{Projectile}}
+\index{Projectile@{Projectile}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{Projectile()}{Projectile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Projectile\+::\+Projectile (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f}]{position,  }\item[{sf\+::\+Sprite}]{sprite,  }\item[{float}]{rotation,  }\item[{bool}]{homing }\end{DoxyParamCaption})}
+
+
+
+Second constructor for bullets fired by the player 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & \\
+\hline
+{\em sprite} & \\
+\hline
+{\em rotation} & \\
+\hline
+{\em homing} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projectile_a94903e021fa2edab60ba3836ca0b937d}\label{class_projectile_a94903e021fa2edab60ba3836ca0b937d}} 
+\index{Projectile@{Projectile}!````~Projectile@{$\sim$Projectile}}
+\index{````~Projectile@{$\sim$Projectile}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{$\sim$Projectile()}{~Projectile()}}
+{\footnotesize\ttfamily Projectile\+::$\sim$\+Projectile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+deconstructor 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_projectile_a38b3d3cb16c15e89a271ec6e1b2b8581}\label{class_projectile_a38b3d3cb16c15e89a271ec6e1b2b8581}} 
+\index{Projectile@{Projectile}!boundaryCollision@{boundaryCollision}}
+\index{boundaryCollision@{boundaryCollision}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{boundaryCollision()}{boundaryCollision()}}
+{\footnotesize\ttfamily void Projectile\+::boundary\+Collision (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$}]{boundary\+Tiles }\end{DoxyParamCaption})}
+
+
+
+Detects if the bullet sprite intersects the boundary tiles sets the alive boolean to false 
+
+
+\begin{DoxyParams}{Parameters}
+{\em boundary\+Tiles} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projectile_ab466ece546b1bc6a68a981b06648dbb8}\label{class_projectile_ab466ece546b1bc6a68a981b06648dbb8}} 
+\index{Projectile@{Projectile}!homing@{homing}}
+\index{homing@{homing}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{homing()}{homing()}}
+{\footnotesize\ttfamily void Projectile\+::homing (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f}]{player\+Pos }\end{DoxyParamCaption})}
+
+
+
+homes the projectile in on the players current position 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player\+Pos} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projectile_adedbcf8400ebc822a87aab813593ef58}\label{class_projectile_adedbcf8400ebc822a87aab813593ef58}} 
+\index{Projectile@{Projectile}!notHoming@{notHoming}}
+\index{notHoming@{notHoming}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{notHoming()}{notHoming()}}
+{\footnotesize\ttfamily void Projectile\+::not\+Homing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_player}{Player}} fired bullet 
+
+\mbox{\Hypertarget{class_projectile_ac1fc6ec57aa00049e7b5318645ebc78f}\label{class_projectile_ac1fc6ec57aa00049e7b5318645ebc78f}} 
+\index{Projectile@{Projectile}!render@{render}}
+\index{render@{render}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Projectile\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window $\ast$}]{window,  }\item[{sf\+::\+Vector2f}]{scale }\end{DoxyParamCaption})}
+
+
+
+renders the projectile if it is alive 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & \\
+\hline
+{\em scale} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projectile_ab0f65ddca638389a1520506e0c26b103}\label{class_projectile_ab0f65ddca638389a1520506e0c26b103}} 
+\index{Projectile@{Projectile}!rotate@{rotate}}
+\index{rotate@{rotate}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void Projectile\+::rotate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Rotates the projectile 
+
+\mbox{\Hypertarget{class_projectile_af105d4defb7561f4f2f8c5e1b856b688}\label{class_projectile_af105d4defb7561f4f2f8c5e1b856b688}} 
+\index{Projectile@{Projectile}!update@{update}}
+\index{update@{update}!Projectile@{Projectile}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Projectile\+::update (\begin{DoxyParamCaption}\item[{sf\+::\+Time}]{delta\+Time,  }\item[{sf\+::\+Vector2f}]{player\+Pos,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_tile}{Tile}} $>$}]{boundary\+Tiles }\end{DoxyParamCaption})}
+
+
+
+updates the portjectile depending on what type of projectile it is 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Time} & \\
+\hline
+{\em player\+Pos} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+A\+I-\/\+Space-\/\+Station/Projectile.\+h\item 
+A\+I-\/\+Space-\/\+Station/Projectile.\+cpp\end{DoxyCompactItemize}
